@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ Thống Quản Lý Nhân Sự - MiniMart CRM</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons CDN (dùng cho các icon riêng của trang này) -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Font Awesome CDN (dùng cho sidebar đồng nhất) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body data-page="nhansu" class="bg-slate-50 text-slate-800 flex h-screen overflow-hidden">
+
+  <!-- SIDEBAR BÊN TRÁI (đồng nhất trên toàn hệ thống) -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between shrink-0">
+    <div class="overflow-y-auto p-4">
+      <div class="flex items-center gap-2 mb-6">
+        <div class="bg-emerald-600 text-white p-2 rounded-lg text-lg flex items-center justify-center w-8 h-8">
+          <i class="fa-solid fa-shop"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-base text-gray-900 leading-none">MINIMART<span class="text-emerald-600">.CRM</span></h1>
+          <span class="text-[10px] text-gray-400 font-medium">HỆ THỐNG SIÊU THỊ MINI</span>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div>
+          <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Nhóm chung</span>
+          <ul class="mt-2 space-y-1">
+            <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"><i class="fa-solid fa-table-cells-large w-4"></i> Dashboard</a></li>
+            <li><a href="quanlynhansu.html" data-key="nhansu" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users-gear w-4"></i> Quản lý Nhân sự</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Thu ngân / POS</span>
+          <ul class="mt-2 space-y-1">
+            <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-cash-register w-4"></i> Bán hàng tại quầy</a></li>
+            <li><a href="DanhSachHD.html" data-key="dshoadon" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-list-ul w-4"></i> Danh sách hóa đơn</a></li>
+            <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-user-tag w-4"></i> Tra cứu khách hàng</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản trị & CRM</span>
+          <ul class="mt-2 space-y-1">
+            <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users w-4"></i> Khách hàng & Thành viên</a></li>
+            <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-chart-line w-4"></i> Báo cáo & Thống kê</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản lý kho</span>
+          <ul class="mt-2 space-y-1">
+            <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-box-archive w-4"></i> Danh mục Sản phẩm</a></li>
+            <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-file-excel w-4"></i> Import Excel</a></li>
+            <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-truck-field w-4"></i> Nhà cung cấp</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 border-t border-gray-100">
+      <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gray-50 border border-gray-100">
+        <div class="js-user-avatar w-9 h-9 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">AD</div>
+        <div class="flex-1 min-w-0">
+          <p class="js-user-name text-xs font-semibold text-gray-800 truncate">—</p>
+          <p class="js-user-role text-[11px] text-gray-400 truncate">—</p>
+        </div>
+        <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    
+    <!-- TOP HEADER -->
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 z-10">
+      <div class="flex items-center gap-4 flex-1 max-w-lg">
+        <div class="relative w-full">
+          <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
+          <input 
+            type="text" 
+            id="searchInput" 
+            oninput="renderTable()"
+            placeholder="Tìm theo CCCD, Họ tên, SĐT hoặc Tài khoản..." 
+            class="w-full pl-9 pr-4 py-2 bg-slate-100 border-none rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all outline-none"
+          >
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <button onclick="openCreateModal()" class="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-lg shadow-sm transition-all">
+          <i class="ph-bold ph-user-plus"></i>
+          Thêm nhân sự
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <main class="flex-1 overflow-y-auto p-8 space-y-6 custom-scrollbar">
+      
+      <!-- BREADCRUMB & TITLE -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-xs text-slate-400 mb-1">
+            <span>HỆ THỐNG</span>
+            <span>/</span>
+            <span class="text-brand-600 font-medium">QUẢN LÝ NHÂN SỰ</span>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-800 tracking-tight">Danh sách Nhân sự</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="exportCSV()" class="flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-100 bg-white shadow-sm">
+            <i class="ph ph-download-simple"></i> Xuất dữ liệu
+          </button>
+        </div>
+      </div>
+
+      <!-- STATS CARDS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tổng nhân sự</p>
+            <h3 class="text-2xl font-extrabold text-slate-800 mt-1" id="statTotal">0</h3>
+            <span class="text-xs text-brand-600 font-medium mt-1 inline-flex items-center gap-1">
+              <i class="ph-bold ph-identification-card"></i> Định danh qua CCCD
+            </span>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl">
+            <i class="ph ph-users"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Đang hoạt động</p>
+            <h3 class="text-2xl font-extrabold text-emerald-600 mt-1" id="statActive">0</h3>
+            <span class="text-xs text-slate-400 font-medium mt-1 inline-block">Được cấp quyền hệ thống</span>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl">
+            <i class="ph ph-check-circle"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tạm khóa tài khoản</p>
+            <h3 class="text-2xl font-extrabold text-amber-600 mt-1" id="statInactive">0</h3>
+            <span class="text-xs text-slate-400 font-medium mt-1 inline-block">Bị tạm ngừng đăng nhập</span>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl">
+            <i class="ph ph-lock-key"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN TABLE CARD -->
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+        
+        <!-- Table Toolbar -->
+        <div class="p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/50">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-slate-500">Bộ lọc trạng thái:</span>
+            <select id="filterStatus" onchange="renderTable()" class="bg-white border border-slate-200 rounded-lg text-xs py-1.5 px-3 font-medium text-slate-700 outline-none focus:ring-2 focus:ring-brand-500">
+              <option value="all">Tất cả trạng thái</option>
+              <option value="active">Đang hoạt động</option>
+              <option value="inactive">Đã khóa</option>
+            </select>
+          </div>
+          <div class="text-xs text-slate-400" id="resultCountInfo">
+            Hiển thị 0 nhân sự
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 text-slate-500 text-xs font-semibold uppercase tracking-wider border-b border-slate-200">
+              <tr>
+                <th class="py-3.5 px-5">CCCD (Khóa chính)</th>
+                <th class="py-3.5 px-5">Họ và tên</th>
+                <th class="py-3.5 px-5">Số điện thoại</th>
+                <th class="py-3.5 px-5">Tài khoản đăng nhập</th>
+                <th class="py-3.5 px-5">Mật khẩu</th>
+                <th class="py-3.5 px-5 text-center">Trạng thái</th>
+                <th class="py-3.5 px-5 text-right">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="employeeTableBody" class="divide-y divide-slate-100">
+              <!-- Render via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="emptyState" class="hidden py-16 flex flex-col items-center justify-center text-center">
+          <div class="w-14 h-14 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-2xl mb-3">
+            <i class="ph ph-identification-badge"></i>
+          </div>
+          <p class="text-slate-700 font-semibold text-base">Không tìm thấy nhân sự phù hợp</p>
+          <p class="text-xs text-slate-400 mt-1">Vui lòng kiểm tra lại từ khóa tìm kiếm hoặc trạng thái lọc.</p>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: THÊM MỚI NHÂN SỰ -->
+  <div id="createModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 transform transition-all">
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center text-lg">
+            <i class="ph-bold ph-user-plus"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-base">Thêm Nhân Sự Mới</h3>
+            <p class="text-[11px] text-slate-400">CCCD được sử dụng làm mã định danh cố định</p>
+          </div>
+        </div>
+        <button onclick="closeCreateModal()" class="text-slate-400 hover:text-slate-600 rounded-lg p-1 text-lg">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <form id="createForm" onsubmit="handleCreate(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Số CCCD (Khóa chính) <span class="text-rose-500">*</span></label>
+          <input type="text" id="add_cccd" required placeholder="Nhập đủ 12 chữ số CCCD" maxlength="12" pattern="\d{12}"
+            class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none font-mono">
+          <p class="text-[11px] text-slate-400 mt-1">CCCD gồm 12 số và không thể sửa đổi sau khi đã tạo.</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Họ và tên <span class="text-rose-500">*</span></label>
+          <input type="text" id="add_fullname" required placeholder="Ví dụ: Nguyễn Văn An"
+            class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Số điện thoại <span class="text-rose-500">*</span></label>
+          <input type="tel" id="add_phone" required placeholder="Ví dụ: 0912345678" pattern="(0|\+84)\d{9}"
+            class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+        </div>
+
+        <div class="pt-2 border-t border-slate-100">
+          <span class="text-[11px] font-bold text-brand-700 uppercase tracking-wider block mb-3">Tài khoản & Phân quyền đăng nhập</span>
+          
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Tài khoản (Username) <span class="text-rose-500">*</span></label>
+              <input type="text" id="add_username" required placeholder="Tên đăng nhập hệ thống"
+                class="w-full px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-brand-500 outline-none">
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">Mật khẩu ban đầu <span class="text-rose-500">*</span></label>
+              <div class="relative">
+                <input type="password" id="add_password" required placeholder="Mật khẩu ít nhất 6 ký tự" minlength="6"
+                  class="w-full px-3.5 py-2 pr-10 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-brand-500 outline-none">
+                <button type="button" onclick="togglePassVisibility('add_password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                  <i class="ph ph-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+          <button type="button" onclick="closeCreateModal()" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">Hủy bỏ</button>
+          <button type="submit" class="px-5 py-2 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+            <i class="ph-bold ph-check"></i> Lưu nhân sự
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: SỬA NHÂN SỰ (CHỈ CHO PHÉP SỬA TÀI KHOẢN & MẬT KHẨU) -->
+  <div id="editModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 transform transition-all">
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-amber-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-lg">
+            <i class="ph-bold ph-pencil-simple"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-base">Cập Nhật Thông Tin Đăng Nhập</h3>
+            <p class="text-[11px] text-amber-600 font-medium">Chỉ được phép thay đổi Tài khoản & Mật khẩu</p>
+          </div>
+        </div>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 rounded-lg p-1 text-lg">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <form id="editForm" onsubmit="handleEdit(event)" class="p-6 space-y-4">
+        <!-- Thông tin cá nhân bị KHÓA CỨNG (READONLY) -->
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Thông tin cố định</span>
+            <span class="text-[10px] bg-slate-200 text-slate-600 font-semibold px-2 py-0.5 rounded">Không thể sửa</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <span class="text-slate-400 block text-[11px]">CCCD:</span>
+              <span id="edit_cccd_display" class="font-mono font-bold text-slate-700"></span>
+              <input type="hidden" id="edit_cccd">
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Họ và tên:</span>
+              <span id="edit_fullname_display" class="font-semibold text-slate-700"></span>
+            </div>
+            <div class="col-span-2">
+              <span class="text-slate-400 block text-[11px]">Số điện thoại:</span>
+              <span id="edit_phone_display" class="font-medium text-slate-700"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chỉ cho phép chỉnh sửa 2 mục này -->
+        <div class="space-y-3.5 pt-1">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Tài khoản (Username) <span class="text-rose-500">*</span></label>
+            <input type="text" id="edit_username" required
+              class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Mật khẩu mới <span class="text-rose-500">*</span></label>
+            <div class="relative">
+              <input type="password" id="edit_password" required minlength="6"
+                class="w-full px-3.5 py-2.5 pr-10 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+              <button type="button" onclick="togglePassVisibility('edit_password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                <i class="ph ph-eye"></i>
+              </button>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Nhập mật khẩu mới (tối thiểu 6 ký tự).</p>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Trạng thái tài khoản</label>
+            <select id="edit_status" class="w-full px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-800 focus:ring-2 focus:ring-amber-500 outline-none">
+              <option value="active">Hoạt động (Cho phép đăng nhập)</option>
+              <option value="inactive">Đã khóa (Chặn truy cập)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">Hủy</button>
+          <button type="submit" class="px-5 py-2 text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+            <i class="ph-bold ph-floppy-disk"></i> Cập nhật thay đổi
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: XEM CHI TIẾT (FORM TƯƠNG TỰ TẠO NHƯNG HOÀN TOÀN KHÔNG CHO SỬA) -->
+  <div id="detailModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 transform transition-all">
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center text-lg">
+            <i class="ph-bold ph-eye"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-base">Hồ Sơ Chi Tiết Nhân Sự</h3>
+            <p class="text-[11px] text-slate-400">Chế độ chỉ xem (Không thể chỉnh sửa)</p>
+          </div>
+        </div>
+        <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 rounded-lg p-1 text-lg">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Số CCCD (Khóa chính)</label>
+          <input type="text" id="view_cccd" readonly disabled
+            class="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-lg text-sm text-slate-800 font-mono font-bold cursor-not-allowed select-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Họ và tên</label>
+          <input type="text" id="view_fullname" readonly disabled
+            class="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-lg text-sm text-slate-800 font-semibold cursor-not-allowed select-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Số điện thoại</label>
+          <input type="text" id="view_phone" readonly disabled
+            class="w-full px-3.5 py-2.5 bg-slate-100 border border-slate-200 rounded-lg text-sm text-slate-800 font-medium cursor-not-allowed select-none">
+        </div>
+
+        <div class="pt-2 border-t border-slate-100">
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-3">Tài khoản & Đăng nhập</span>
+          
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-500 mb-1">Tài khoản đăng nhập (Username)</label>
+              <input type="text" id="view_username" readonly disabled
+                class="w-full px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium cursor-not-allowed select-none">
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-500 mb-1">Mật khẩu</label>
+              <div class="relative">
+                <input type="password" id="view_password" readonly disabled
+                  class="w-full px-3.5 py-2 pr-10 bg-slate-100 border border-slate-200 rounded-lg text-sm text-slate-700 font-mono cursor-not-allowed select-none">
+                <button type="button" onclick="togglePassVisibility('view_password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                  <i class="ph ph-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-500 mb-1">Trạng thái tài khoản</label>
+              <input type="text" id="view_status_badge" readonly disabled
+                class="w-full px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-lg text-sm font-semibold cursor-not-allowed select-none">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end pt-4 border-t border-slate-100">
+          <button type="button" onclick="closeDetailModal()" class="px-5 py-2 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+            Đóng cửa sổ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2"></div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <!-- Script dùng chung: bảo vệ trang, tô sáng sidebar, hiển thị người dùng, đăng xuất -->
+  <script src="common.js"></script>
+  <script>
+    // Kết nối tới backend Spring Boot
+    const API_BASE = 'http://localhost:8080/api/nhansu';
+
+    // Danh sách nhân sự lấy từ backend (không còn dữ liệu mẫu tĩnh)
+    let employees = [];
+
+    // Chuyển 1 bản ghi NhanSu (backend) -> object dùng cho giao diện
+    function mapFromBackend(ns) {
+      return {
+        cccd: ns.cccd,
+        fullName: ns.hoTen,
+        phone: ns.sdt,
+        username: ns.taiKhoan,
+        password: ns.matKhau,
+        role: ns.role,
+        status: ns.trangThai || 'active'
+      };
+    }
+
+    // Lấy danh sách nhân sự từ backend
+    async function loadEmployees() {
+      try {
+        const res = await fetch(API_BASE);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        employees = data.map(mapFromBackend);
+      } catch (err) {
+        console.error(err);
+        showToast('Không thể kết nối đến máy chủ backend!', 'error');
+      }
+    }
+
+    // Khởi chạy khi load trang
+    window.onload = async () => {
+      await loadEmployees();
+      renderTable();
+    };
+
+    // Render bảng dữ liệu
+    function renderTable() {
+      const tbody = document.getElementById('employeeTableBody');
+      const emptyState = document.getElementById('emptyState');
+      const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+      const filterStatus = document.getElementById('filterStatus').value;
+
+      const filtered = employees.filter(emp => {
+        const matchesSearch = emp.cccd.toLowerCase().includes(searchTerm) ||
+                              emp.fullName.toLowerCase().includes(searchTerm) ||
+                              emp.phone.toLowerCase().includes(searchTerm) ||
+                              emp.username.toLowerCase().includes(searchTerm);
+        
+        const matchesStatus = (filterStatus === 'all') || (emp.status === filterStatus);
+        return matchesSearch && matchesStatus;
+      });
+
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        filtered.forEach(emp => {
+          const row = document.createElement('tr');
+          row.className = "hover:bg-slate-50/80 transition-colors group";
+          row.innerHTML = `
+            <td class="py-3.5 px-5">
+              <span class="font-mono font-bold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-md text-xs border border-brand-100">
+                ${emp.cccd}
+              </span>
+            </td>
+            <td class="py-3.5 px-5 font-semibold text-slate-800">
+              ${emp.fullName}
+            </td>
+            <td class="py-3.5 px-5 text-slate-600 font-medium">
+              ${emp.phone}
+            </td>
+            <td class="py-3.5 px-5">
+              <span class="text-xs font-mono bg-slate-100 text-slate-700 px-2 py-1 rounded font-medium">
+                ${emp.username}
+              </span>
+            </td>
+            <td class="py-3.5 px-5 font-mono text-xs text-slate-400">
+              ••••••••
+            </td>
+            <td class="py-3.5 px-5 text-center">
+              ${emp.status === 'active' 
+                ? '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Hoạt động</span>'
+                : '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Đã khóa</span>'
+              }
+            </td>
+            <td class="py-3.5 px-5 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button onclick="openDetailModal('${emp.cccd}')" title="Xem chi tiết" 
+                  class="p-1.5 text-slate-500 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">
+                  <i class="ph-bold ph-eye text-base"></i>
+                </button>
+                <button onclick="openEditModal('${emp.cccd}')" title="Chỉnh sửa tài khoản & mật khẩu" 
+                  class="p-1.5 text-slate-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
+                  <i class="ph-bold ph-pencil-simple text-base"></i>
+                </button>
+                <button onclick="deleteEmployee('${emp.cccd}')" title="Xóa nhân sự" 
+                  class="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
+                  <i class="ph-bold ph-trash text-base"></i>
+                </button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+
+      document.getElementById('resultCountInfo').textContent = `Hiển thị ${filtered.length} / ${employees.length} nhân sự`;
+      updateStats();
+    }
+
+    function updateStats() {
+      document.getElementById('statTotal').textContent = employees.length;
+      document.getElementById('statActive').textContent = employees.filter(e => e.status === 'active').length;
+      document.getElementById('statInactive').textContent = employees.filter(e => e.status === 'inactive').length;
+    }
+
+    // Toggle ẩn hiện mật khẩu
+    function togglePassVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // Modal Create
+    function openCreateModal() {
+      document.getElementById('createForm').reset();
+      document.getElementById('createModal').classList.remove('hidden');
+    }
+    function closeCreateModal() {
+      document.getElementById('createModal').classList.add('hidden');
+    }
+
+    async function handleCreate(e) {
+      e.preventDefault();
+      const cccd = document.getElementById('add_cccd').value.trim();
+      const fullName = document.getElementById('add_fullname').value.trim();
+      const phone = document.getElementById('add_phone').value.trim();
+      const username = document.getElementById('add_username').value.trim();
+      const password = document.getElementById('add_password').value;
+
+      // Kiểm tra CCCD khóa chính đã tồn tại chưa (kiểm tra nhanh phía client)
+      if (employees.some(emp => emp.cccd === cccd)) {
+        showToast(`Số CCCD "${cccd}" đã tồn tại trong hệ thống!`, 'error');
+        return;
+      }
+
+      try {
+        const res = await fetch(API_BASE, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            cccd,
+            hoTen: fullName,
+            sdt: phone,
+            taiKhoan: username,
+            matKhau: password,
+            role: 'nhanvien',
+            trangThai: 'active'
+          })
+        });
+
+        if (res.status === 409) {
+          showToast(`Số CCCD "${cccd}" đã tồn tại trong hệ thống!`, 'error');
+          return;
+        }
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        await loadEmployees();
+        closeCreateModal();
+        renderTable();
+        showToast(`Đã thêm nhân sự [${fullName}] thành công!`, 'success');
+      } catch (err) {
+        console.error(err);
+        showToast('Lỗi kết nối backend, không thể thêm nhân sự!', 'error');
+      }
+    }
+
+    // Modal Edit (Chỉ sửa tài khoản & mật khẩu)
+    function openEditModal(cccd) {
+      const emp = employees.find(e => e.cccd === cccd);
+      if (!emp) return;
+
+      // Đưa thông tin cá nhân vào dạng khóa cứng
+      document.getElementById('edit_cccd').value = emp.cccd;
+      document.getElementById('edit_cccd_display').textContent = emp.cccd;
+      document.getElementById('edit_fullname_display').textContent = emp.fullName;
+      document.getElementById('edit_phone_display').textContent = emp.phone;
+
+      // Đưa thông tin được phép sửa vào input
+      document.getElementById('edit_username').value = emp.username;
+      document.getElementById('edit_password').value = emp.password;
+      document.getElementById('edit_status').value = emp.status;
+
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+    function closeEditModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+
+    async function handleEdit(e) {
+      e.preventDefault();
+      const cccd = document.getElementById('edit_cccd').value;
+
+      try {
+        const res = await fetch(`${API_BASE}/${cccd}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            taiKhoan: document.getElementById('edit_username').value.trim(),
+            matKhau: document.getElementById('edit_password').value,
+            trangThai: document.getElementById('edit_status').value
+          })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        await loadEmployees();
+        closeEditModal();
+        renderTable();
+        showToast(`Cập nhật thông tin đăng nhập CCCD [${cccd}] thành công!`, 'success');
+      } catch (err) {
+        console.error(err);
+        showToast('Lỗi kết nối backend, không thể cập nhật!', 'error');
+      }
+    }
+
+    // Modal Xem chi tiết (Readonly)
+    function openDetailModal(cccd) {
+      const emp = employees.find(e => e.cccd === cccd);
+      if (!emp) return;
+
+      document.getElementById('view_cccd').value = emp.cccd;
+      document.getElementById('view_fullname').value = emp.fullName;
+      document.getElementById('view_phone').value = emp.phone;
+      document.getElementById('view_username').value = emp.username;
+      document.getElementById('view_password').value = emp.password;
+      
+      const badge = document.getElementById('view_status_badge');
+      if (emp.status === 'active') {
+        badge.value = "Đang hoạt động";
+        badge.className = "w-full px-3.5 py-2 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg text-sm font-semibold cursor-not-allowed select-none";
+      } else {
+        badge.value = "Tài khoản bị khóa";
+        badge.className = "w-full px-3.5 py-2 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-sm font-semibold cursor-not-allowed select-none";
+      }
+
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    // Xóa nhân sự
+    async function deleteEmployee(cccd) {
+      const emp = employees.find(e => e.cccd === cccd);
+      if (!emp) return;
+
+      if (confirm(`Bạn có chắc chắn muốn xóa nhân sự "${emp.fullName}" (CCCD: ${emp.cccd}) khỏi hệ thống?`)) {
+        try {
+          const res = await fetch(`${API_BASE}/${cccd}`, { method: 'DELETE' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+
+          await loadEmployees();
+          renderTable();
+          showToast(`Đã xóa nhân sự có CCCD [${cccd}] thành công!`, 'info');
+        } catch (err) {
+          console.error(err);
+          showToast('Lỗi kết nối backend, không thể xóa nhân sự!', 'error');
+        }
+      }
+    }
+
+    // Xuất file CSV
+    function exportCSV() {
+      let csvContent = "\uFEFFCCCD,HoVaTen,SoDienThoai,TaiKhoan,TrangThai\n";
+      employees.forEach(e => {
+        csvContent += `"${e.cccd}","${e.fullName}","${e.phone}","${e.username}","${e.status}"\n`;
+      });
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `danh_sach_nhan_su_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("Đã xuất file danh sách nhân sự thành công!", "success");
+    }
+
+    // Hiển thị Toast thông báo mượt mà
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-slate-800 text-white';
+      let icon = 'ph-check-circle text-emerald-400';
+      if (type === 'error') {
+        bg = 'bg-rose-600 text-white';
+        icon = 'ph-warning-circle';
+      } else if (type === 'info') {
+        bg = 'bg-slate-800 text-white';
+        icon = 'ph-info';
+      }
+
+      toast.className = `flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-lg text-sm font-medium transition-all transform duration-300 translate-y-2 opacity-0 ${bg}`;
+      toast.innerHTML = `<i class="ph-bold ${icon} text-lg"></i> <span>${message}</span>`;
+      
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

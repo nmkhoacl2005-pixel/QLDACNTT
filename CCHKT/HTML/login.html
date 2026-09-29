@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cổng Đăng Nhập Vận Hành Siêu Thị - MINIMART.CRM</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex items-center justify-center p-4 lg:p-12">
+
+  <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    
+    <!-- CỘT TRÁI: GIỚI THIỆU HỆ THỐNG -->
+    <div class="lg:col-span-7 space-y-8">
+      <!-- Tag thông tin -->
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-200/70 text-slate-700 text-xs font-semibold tracking-wide uppercase">
+        <i data-lucide="store" class="w-4 h-4 text-emerald-600"></i>
+        <span>Hệ thống quản lý bán lẻ siêu thị mini mart 24/7</span>
+      </div>
+
+      <!-- Tiêu đề & mô tả -->
+      <div class="space-y-4">
+        <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+          Cổng Đăng Nhập <span class="text-[#007042]"></span>
+        </h1>
+        <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+          <span class="text-[#007042]">Vận Hành Siêu Thị</span>
+        </h1>
+      </div>
+
+      <!-- Thẻ thông số nổi bật (Stats Cards) -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2"></div>
+
+      <!-- Trạng thái hệ thống & chi nhánh -->
+      <div class="flex flex-wrap items-center gap-6 text-xs text-slate-500 font-medium pt-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <span>Máy chủ máy chủ: Hoạt động bình thường</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="store" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>Chi nhánh: CN-01 Cầu Giấy (Trung tâm)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CỘT PHẢI: FORM ĐĂNG NHẬP -->
+    <div class="lg:col-span-5">
+      <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100/80">
+        
+        <!-- Logo & Brand Header -->
+        <div class="text-center space-y-1 mb-6">
+          <div class="inline-flex items-center justify-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-[#007042] text-white flex items-center justify-center">
+              <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            </div>
+            <div class="text-left leading-none">
+              <span class="text-lg font-black tracking-tight text-slate-800">MINIMART<span class="text-[#007042]">.CRM</span></span>
+              <span class="block text-[9px] uppercase tracking-wider text-slate-400 font-semibold">Hệ thống siêu thị mini</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 pt-1">Xác thực tài khoản nhân viên & quản trị</p>
+        </div>
+
+        <!-- Cảnh báo lỗi đăng nhập (ẩn mặc định, chỉ hiện khi đăng nhập sai) -->
+        <div id="login-error-box" class="hidden mb-3 p-3.5 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3">
+          <i data-lucide="alert-circle" class="w-5 h-5 text-red-500 shrink-0 mt-0.5"></i>
+          <div class="text-xs leading-snug">
+            <p id="login-error-title" class="font-bold text-red-700">Sai tài khoản hoặc mật khẩu</p>
+            <p id="login-error-detail" class="text-red-600 mt-0.5">Vui lòng kiểm tra lại bàn phím hoặc chế độ gõ Caps Lock trước khi thử lại.</p>
+          </div>
+        </div>
+
+        <!-- Cảnh báo khóa tài khoản -->
+        <div class="mb-5 p-3 rounded-xl bg-blue-50/70 border border-blue-100/60 flex items-center gap-2.5 text-xs text-blue-900">
+          <i data-lucide="shield-alert" class="w-4 h-4 text-blue-600 shrink-0"></i>
+          <span>Đăng nhập sai 5 lần liên tiếp sẽ tự động khóa tài khoản trong 15 phút để bảo mật hệ thống.</span>
+        </div>
+
+        <!-- Biểu mẫu nhập liệu -->
+        <form id="loginForm" class="space-y-4">
+          <!-- Trường Mã nhân viên / Email -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="username">Mã nhân viên hoặc Email</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <i data-lucide="user" class="w-4 h-4"></i>
+              </div>
+              <input 
+                type="text" 
+                id="username" 
+                placeholder="NV2408_THUNGAN01"
+                class="w-full pl-10 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition"
+              >
+            </div>
+          </div>
+
+          <!-- Trường Mật khẩu -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs font-semibold text-slate-700" for="password">Mật khẩu</label>
+            </div>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <i data-lucide="key-round" class="w-4 h-4"></i>
+              </div>
+              <input 
+                type="password" 
+                id="password" 
+                placeholder="••••••••••••"
+                class="w-full pl-10 pr-10 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition"
+              >
+              <button 
+                type="button" 
+                id="toggle-password" 
+                class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition"
+                aria-label="Hiện mật khẩu"
+              >
+                <i data-lucide="eye-off" id="eye-icon" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Nút Đăng nhập -->
+          <button 
+            type="submit" 
+            class="w-full mt-3 py-3 px-4 bg-[#007042] hover:bg-[#005a35] active:bg-[#00482a] text-white font-medium text-sm rounded-xl shadow-md shadow-emerald-900/10 flex items-center justify-center gap-2 transition duration-150"
+          >
+            <span>Đăng nhập hệ thống</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </form>
+
+        <!-- Footer hỗ trợ kỹ thuật -->
+        <div class="mt-8 pt-6 border-t border-slate-100 text-center space-y-1.5 text-xs text-slate-500">
+          <div class="flex items-center justify-center gap-1.5 font-medium text-slate-600">
+            <i data-lucide="headphones" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>Hotline Kỹ thuật POS 24/7: <strong class="text-slate-800">1900 6868 (Nhánh 1)</strong></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Script kích hoạt icon và chuyển đổi ẩn/hiện mật khẩu -->
+  <script>
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eye-icon');
+
+    togglePasswordBtn.addEventListener('click', function() {
+        const isHidden = passwordInput.type === 'password';
+        passwordInput.type = isHidden ? 'text' : 'password';
+        eyeIcon.setAttribute('data-lucide', isHidden ? 'eye' : 'eye-off');
+        togglePasswordBtn.setAttribute('aria-label', isHidden ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+        if (window.lucide) lucide.createIcons();
+    });
+
+    const loginErrorBox = document.getElementById('login-error-box');
+    const loginErrorTitle = document.getElementById('login-error-title');
+    const loginErrorDetail = document.getElementById('login-error-detail');
+
+    function showLoginError(message) {
+        loginErrorTitle.textContent = message || 'Sai tài khoản hoặc mật khẩu';
+        loginErrorDetail.textContent = 'Vui lòng kiểm tra lại bàn phím hoặc chế độ gõ Caps Lock trước khi thử lại.';
+        loginErrorBox.classList.remove('hidden');
+    }
+
+    function hideLoginError() {
+        loginErrorBox.classList.add('hidden');
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        hideLoginError();
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+            const res = await fetch('http://localhost:8080/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await res.json();
+
+            if (res.ok && data.success) {
+                // Lưu thông tin đăng nhập và role vào sessionStorage hoặc localStorage
+                sessionStorage.setItem('currentUser', JSON.stringify(data));
+                sessionStorage.setItem('role', data.role);
+
+                // Điều hướng trang theo role
+                if (data.role === 'admin') {
+                    window.location.href = './admin/quanlynhansu.html'; // Hoặc đường dẫn trang admin của bạn
+                } else if (data.role === 'nhanvien') {
+                    window.location.href = '/nhanvien.html'; // Hoặc đường dẫn trang nhân viên
+                } else {
+                    window.location.href = '/home.html';
+                }
+            } else {
+                showLoginError(data.message);
+            }
+        } catch (error) {
+            console.error('Lỗi đăng nhập:', error);
+            showLoginError('Không thể kết nối đến máy chủ!');
+        }
+    });
+
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
