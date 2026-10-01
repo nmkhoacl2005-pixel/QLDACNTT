@@ -1,6 +1,7 @@
 package com.example.CCHKT.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "nhansu")
@@ -28,6 +29,12 @@ public class NhanSu {
 
     @Column(name = "trang_thai")
     private String trangThai;
+
+    @Column(name = "so_lan_sai")
+    private Integer soLanSai = 0;
+
+    @Column(name = "khoa_den")
+    private LocalDateTime khoaDen;
 
     public NhanSu() {}
 
@@ -61,4 +68,10 @@ public class NhanSu {
 
     public String getTrangThai() { return trangThai; }
     public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
+
+    public Integer getSoLanSai() { return soLanSai; }
+    public void setSoLanSai(Integer soLanSai) { this.soLanSai = soLanSai; }
+
+    public LocalDateTime getKhoaDen() { return khoaDen; }
+    public void setKhoaDen(LocalDateTime khoaDen) { this.khoaDen = khoaDen; }
 }

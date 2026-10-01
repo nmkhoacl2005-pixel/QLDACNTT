@@ -176,6 +176,7 @@
     }
 
     function hideLoginError() {
+        if (isLocked()) return; 
         loginErrorBox.classList.add('hidden');
     }
 
@@ -198,6 +199,7 @@
             const data = await res.json();
 
             if (res.ok && data.success) {
+                localStorage.removeItem(LS_ATTEMPTS);
                 // Lưu thông tin đăng nhập và role vào sessionStorage hoặc localStorage
                 sessionStorage.setItem('currentUser', JSON.stringify(data));
                 sessionStorage.setItem('role', data.role);
@@ -219,6 +221,63 @@
         }
     });
 
+    const MAX_ATTEMPTS = 3;
+    const LOCK_SECONDS = 30;
+    const LS_ATTEMPTS = 'loginAttempts';
+    const LS_LOCK_UNTIL = 'loginLockUntil';
+    let lockTimer = null;
+
+    const submitBtn = document.querySelector('#loginForm button[type="submit"]');
+    const submitBtnLabel = submitBtn.querySelector('span');
+    const submitBtnDefaultText = submitBtnLabel.textContent;
+
+    function isLocked() {
+        return Date.now() < Number(localStorage.getItem(LS_LOCK_UNTIL) || 0);
+    }
+
+    function setFormLocked(locked) {
+        document.getElementById('username').disabled = locked;
+        passwordInput.disabled = locked;
+        submitBtn.disabled = locked;
+        submitBtn.classList.toggle('opacity-60', locked);
+        submitBtn.classList.toggle('cursor-not-allowed', locked);
+    }
+
+    function startLockCountdown() {
+        clearInterval(lockTimer);
+        const tick = () => {
+            const remain = Math.ceil((Number(localStorage.getItem(LS_LOCK_UNTIL)) - Date.now()) / 1000);
+            if (remain <= 0) {
+                clearInterval(lockTimer);
+                localStorage.removeItem(LS_LOCK_UNTIL);
+                localStorage.removeItem(LS_ATTEMPTS);
+                setFormLocked(false);
+                submitBtnLabel.textContent = submitBtnDefaultText;
+                hideLoginError();
+                return;
+            }
+            setFormLocked(true);
+            submitBtnLabel.textContent = `Thử lại sau ${remain}s`;
+            loginErrorTitle.textContent = 'Tài khoản tạm thời bị đình chỉ';
+            loginErrorDetail.textContent = `Bạn đã nhập sai ${MAX_ATTEMPTS} lần. Vui lòng thử lại sau ${remain} giây.`;
+            loginErrorBox.classList.remove('hidden');
+        };
+        tick();
+        lockTimer = setInterval(tick, 1000);
+    }
+
+    function registerFailedAttempt(message) {
+        const attempts = Number(localStorage.getItem(LS_ATTEMPTS) || 0) + 1;
+        if (attempts >= MAX_ATTEMPTS) {
+            localStorage.setItem(LS_LOCK_UNTIL, Date.now() + LOCK_SECONDS * 1000);
+            startLockCountdown();
+        } else {
+            localStorage.setItem(LS_ATTEMPTS, attempts);
+            showLoginError(message);
+            loginErrorDetail.textContent = `Bạn còn ${MAX_ATTEMPTS - attempts} lần thử trước khi bị khóa ${LOCK_SECONDS} giây.`;
+        }
+    }
+    if (isLocked()) startLockCountdown();
     if (window.lucide) lucide.createIcons();
   </script>
 </body>

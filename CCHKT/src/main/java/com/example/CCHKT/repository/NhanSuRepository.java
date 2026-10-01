@@ -12,4 +12,5 @@ public interface NhanSuRepository extends JpaRepository<NhanSu, String> {
     Optional<NhanSu> findByTaiKhoanAndMatKhau(String taiKhoan, String matKhau);
     Optional<NhanSu> findByCccd(String cccd);
     Optional<NhanSu> findByTrangThai(String trangThai);
+    Optional<NhanSu> findByTaiKhoan(String taiKhoan);
 }
