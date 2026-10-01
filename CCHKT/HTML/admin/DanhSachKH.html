@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách khách hàng - MINIMART.CRM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body data-page="khachhang" class="bg-[#f8fafc] flex h-screen overflow-hidden text-gray-800 text-sm">
+
+    <!-- SIDEBAR BÊN TRÁI (đồng nhất trên toàn hệ thống) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between shrink-0">
+        <div class="overflow-y-auto p-4">
+            <div class="flex items-center gap-2 mb-6">
+                <div class="bg-emerald-600 text-white p-2 rounded-lg text-lg flex items-center justify-center w-8 h-8">
+                    <i class="fa-solid fa-shop"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base text-gray-900 leading-none">MINIMART<span class="text-emerald-600">.CRM</span></h1>
+                    <span class="text-[10px] text-gray-400 font-medium">HỆ THỐNG SIÊU THỊ MINI</span>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Nhóm chung</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"><i class="fa-solid fa-table-cells-large w-4"></i> Dashboard</a></li>
+                        <li><a href="quanlynhansu.html" data-key="nhansu" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users-gear w-4"></i> Quản lý Nhân sự</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Thu ngân / POS</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-cash-register w-4"></i> Bán hàng tại quầy</a></li>
+                        <li><a href="DanhSachHD.html" data-key="dshoadon" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-list-ul w-4"></i> Danh sách hóa đơn</a></li>
+                        <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-user-tag w-4"></i> Tra cứu khách hàng</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản trị & CRM</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users w-4"></i> Khách hàng & Thành viên</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-chart-line w-4"></i> Báo cáo & Thống kê</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản lý kho</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-box-archive w-4"></i> Danh mục Sản phẩm</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-file-excel w-4"></i> Import Excel</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-truck-field w-4"></i> Nhà cung cấp</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gray-50 border border-gray-100">
+                <div class="js-user-avatar w-9 h-9 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">AD</div>
+                <div class="flex-1 min-w-0">
+                    <p class="js-user-name text-xs font-semibold text-gray-800 truncate">—</p>
+                    <p class="js-user-role text-[11px] text-gray-400 truncate">—</p>
+                </div>
+                <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Header -->
+        <header class="h-14 bg-white border-b border-gray-200 px-6 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="relative w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
+                    <input type="text" placeholder="Tìm đơn hàng, mã SKU, khách hàng... (F2)" class="w-full pl-9 pr-4 py-1.5 bg-gray-100 border-none rounded-lg text-xs focus:outline-none">
+                </div>
+                <div class="flex items-center gap-1.5 text-xs font-semibold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+                    <i class="fa-solid fa-store text-emerald-600"></i>
+                    <span>Chi nhánh Quận 1 - Hồ Chí Minh</span>
+                    <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-gray-400"></i>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-4 py-1.5 rounded-lg flex items-center gap-2 text-xs">
+                    <i class="fa-solid fa-plus-circle"></i> Tạo đơn nhanh
+                </button>
+                <button class="relative text-gray-400 hover:text-gray-600">
+                    <i class="fa-regular fa-bell text-base"></i>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="flex items-center gap-3 pl-2 border-l border-gray-200">
+                    <div class="text-right">
+                        <div class="js-user-name font-bold text-xs text-gray-800">—</div>
+                        <div class="js-user-role text-[11px] text-gray-400">—</div>
+                    </div>
+                    <div class="js-user-avatar w-8 h-8 rounded-full border bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">—</div>
+                    <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Thân trang chia thành 2 phần: Bảng khách hàng & Flyout Panel bên phải -->
+        <div class="flex-1 flex overflow-hidden">
+            <!-- VÙNG TRÁI: THỐNG KÊ + BẢNG DANH SÁCH KHÁCH HÀNG -->
+            <main class="flex-1 overflow-y-auto p-6 space-y-6">
+                <!-- Tiêu đề & Breadcrumb & Action button -->
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="text-[11px] text-gray-400 font-medium">KHÁCH HÀNG & CRM &gt; <span class="text-gray-600">Hồ sơ hội viên MiniMart</span></div>
+                        <div class="flex items-center gap-3 mt-1">
+                            <h1 class="text-xl font-bold text-gray-900">Danh sách Khách hàng</h1>
+                            <span id="totalMembersLabel" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded-full">0 thành viên</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                        <button onclick="loadCustomers()" class="border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium px-3 py-1.5 rounded-lg flex items-center gap-1.5"><i class="fa-solid fa-rotate-right"></i> Tải lại</button>
+                        <button onclick="openAddModal()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-3.5 py-1.5 rounded-lg flex items-center gap-1.5"><i class="fa-solid fa-user-plus"></i> Thêm khách hàng</button>
+                    </div>
+                </div>
+
+                <!-- 4 Thẻ KPI thống kê nhanh -->
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-2xs flex justify-between items-start">
+                        <div>
+                            <span class="text-xs text-gray-400 font-medium">Hội viên hạng Vàng</span>
+                            <div id="kpiVang" class="text-2xl font-black text-gray-900 my-1">0</div>
+                            <span class="text-[11px] text-gray-400 font-normal">Điểm tích lũy &gt; 100</span>
+                        </div>
+                        <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-gem"></i></div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-2xs flex justify-between items-start">
+                        <div>
+                            <span class="text-xs text-gray-400 font-medium">Tổng điểm khả dụng</span>
+                            <div id="kpiTongDiem" class="text-2xl font-black text-gray-900 my-1">0</div>
+                            <span class="text-[11px] text-blue-600 font-medium flex items-center gap-1"><i class="fa-regular fa-circle-dot"></i> 1 điểm ứng với 50.000đ đã chi</span>
+                        </div>
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm"><i class="fa-solid fa-coins"></i></div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-2xs flex justify-between items-start">
+                        <div>
+                            <span class="text-xs text-gray-400 font-medium">Giao dịch trong 7 ngày</span>
+                            <div class="text-2xl font-black text-gray-900 my-1">64.8%</div>
+                            <div class="w-24 bg-gray-100 h-1.5 rounded-full overflow-hidden mt-1">
+                                <div class="bg-emerald-600 h-1.5 w-2/3"></div>
+                            </div>
+                        </div>
+                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-basket-shopping"></i></div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-4 shadow-2xs flex justify-between items-start">
+                        <div>
+                            <span class="text-xs text-gray-400 font-medium">Nhật ký chỉnh sửa</span>
+                            <div class="text-2xl font-black text-gray-900 my-1">3 bản ghi</div>
+                            <a href="#" class="text-[11px] text-indigo-600 font-bold hover:underline">Xem lịch sử gần nhất →</a>
+                        </div>
+                        <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    </div>
+                </div>
+
+                <!-- Bộ lọc & Lọc nhanh theo phân hạng -->
+                <div class="space-y-3">
+                    <div class="flex gap-3 text-xs">
+                        <div class="relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
+                            <input id="searchInput" oninput="renderTable()" type="text" placeholder="Tìm theo Số điện thoại, Họ tên..." class="w-full pl-9 pr-3 py-2 bg-white border border-gray-200 rounded-xl focus:outline-none">
+                        </div>
+                        <select id="hangFilter" onchange="renderTable()" class="bg-white border border-gray-200 rounded-xl px-3 py-2 text-gray-700 focus:outline-none">
+                            <option value="">Hạng thành viên: Tất cả</option>
+                            <option value="Vàng">Vàng</option>
+                            <option value="Bạc">Bạc</option>
+                            <option value="Đồng">Đồng</option>
+                            <option value="Chưa xếp hạng">Chưa xếp hạng</option>
+                        </select>
+                        <button onclick="loadCustomers()" class="bg-white border border-gray-200 px-3 py-2 rounded-xl text-gray-500 hover:bg-gray-50"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+
+                    <!-- Pills Lọc nhanh hạng -->
+                    <div id="hangPills" class="flex items-center gap-2 text-xs">
+                        <span class="text-gray-400 text-[11px]">Lọc nhanh hạng:</span>
+                        <button data-hang="" onclick="setHangFilter('')" class="pill-btn bg-emerald-800 text-white font-semibold px-3 py-1 rounded-lg">Tất cả</button>
+                        <button data-hang="Đồng" onclick="setHangFilter('Đồng')" class="pill-btn bg-white border text-gray-600 hover:bg-gray-50 px-3 py-1 rounded-lg">Đồng</button>
+                        <button data-hang="Bạc" onclick="setHangFilter('Bạc')" class="pill-btn bg-white border text-gray-600 hover:bg-gray-50 px-3 py-1 rounded-lg">Bạc</button>
+                        <button data-hang="Vàng" onclick="setHangFilter('Vàng')" class="pill-btn bg-white border text-gray-600 hover:bg-gray-50 px-3 py-1 rounded-lg">Vàng</button>
+                    </div>
+                </div>
+
+                <!-- Bảng danh sách hội viên -->
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2xs">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-gray-50/75 text-gray-400 uppercase text-[10px] font-bold border-b border-gray-100">
+                            <tr>
+                                <th class="py-3 px-4">Số điện thoại</th>
+                                <th class="py-3 px-4">Họ và tên</th>
+                                <th class="py-3 px-4 text-right">Điểm tích lũy</th>
+                                <th class="py-3 px-4 text-center">Hạng hội viên</th>
+                                <th class="py-3 px-4">Voucher khả dụng</th>
+                                <th class="py-3 px-4 text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody" class="divide-y divide-gray-100 font-medium">
+                            <tr><td colspan="6" class="py-8 text-center text-gray-400">Đang tải dữ liệu...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Ghi chú quy tắc điểm/hạng -->
+                <div class="text-[11px] text-gray-400 flex items-center gap-2 pt-1">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>50.000đ chi tiêu = 1 điểm &nbsp;•&nbsp; Đồng &gt;20đ (voucher 10%) &nbsp;•&nbsp; Bạc &gt;50đ (voucher 10%,20%) &nbsp;•&nbsp; Vàng &gt;100đ (voucher 10%,20%,30%) &nbsp;•&nbsp; Đổi voucher: 10%=-5đ, 20%=-8đ, 30%=-10đ</span>
+                </div>
+            </main>
+
+
+    <!-- MODAL: Thêm khách hàng -->
+    <div id="addModal" class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 w-96 space-y-4 shadow-xl">
+            <h3 class="font-bold text-gray-900">Thêm khách hàng mới</h3>
+            <div class="space-y-2 text-xs">
+                <div>
+                    <label class="block text-gray-500 mb-1">Số điện thoại</label>
+                    <input id="newSdt" type="text" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-gray-500 mb-1">Họ và tên</label>
+                    <input id="newTen" type="text" class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:outline-none">
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeAddModal()" class="px-3 py-1.5 text-xs rounded-lg border border-gray-200 hover:bg-gray-50">Hủy</button>
+                <button onclick="submitAddCustomer()" class="px-3 py-1.5 text-xs rounded-lg bg-emerald-700 text-white hover:bg-emerald-800 font-semibold">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2"></div>
+
+    <!-- JAVASCRIPT: KẾT NỐI BACKEND SPRING BOOT -->
+    <!-- Script dùng chung: bảo vệ trang, tô sáng sidebar, hiển thị người dùng, đăng xuất -->
+    <script src="common.js"></script>
+    <script>
+        const API_BASE = 'http://localhost:8080/api/khachhang';
+        let customers = []; // dữ liệu khách hàng lấy từ backend (KhachHangResponse: sdt, ten, diem, hang, voucherKhaDung)
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const color = type === 'error' ? 'bg-red-600' : 'bg-emerald-600';
+            toast.className = `${color} text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-lg`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function badgeHang(hang) {
+            const map = {
+                'Vàng': 'bg-amber-100 text-amber-700',
+                'Bạc': 'bg-blue-100 text-blue-700',
+                'Đồng': 'bg-orange-100 text-orange-700',
+                'Chưa xếp hạng': 'bg-gray-100 text-gray-500'
+            };
+            const cls = map[hang] || 'bg-gray-100 text-gray-500';
+            return `<span class="${cls} text-[10px] font-bold px-2 py-0.5 rounded-full">${hang}</span>`;
+        }
+
+        function badgeVoucher(list) {
+            if (!list || list.length === 0) return '<span class="text-gray-300 text-[11px]">Chưa đủ điều kiện</span>';
+            return list.map(p => `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-1.5 py-0.5 rounded mr-1">${p}%</span>`).join('');
+        }
+
+        async function loadCustomers() {
+            const tbody = document.getElementById('customerTableBody');
+            tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-gray-400">Đang tải dữ liệu...</td></tr>';
+            try {
+                const res = await fetch(API_BASE);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                customers = await res.json();
+                renderTable();
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-red-500">Không thể kết nối đến máy chủ backend (http://localhost:8080)</td></tr>';
+                showToast('Không thể kết nối đến máy chủ backend!', 'error');
+            }
+        }
+
+        function setHangFilter(hang) {
+            document.getElementById('hangFilter').value = hang;
+            document.querySelectorAll('.pill-btn').forEach(btn => {
+                const active = btn.dataset.hang === hang;
+                btn.className = 'pill-btn ' + (active
+                    ? 'bg-emerald-800 text-white font-semibold px-3 py-1 rounded-lg'
+                    : 'bg-white border text-gray-600 hover:bg-gray-50 px-3 py-1 rounded-lg');
+            });
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('customerTableBody');
+            const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+            const hangFilter = document.getElementById('hangFilter')?.value || '';
+
+            let filtered = customers.filter(kh =>
+                (kh.sdt?.toLowerCase().includes(search) || kh.ten?.toLowerCase().includes(search)) &&
+                (hangFilter === '' || kh.hang === hangFilter)
+            );
+
+            document.getElementById('totalMembersLabel').textContent = customers.length + ' thành viên';
+            document.getElementById('kpiVang').textContent = customers.filter(kh => kh.hang === 'Vàng').length;
+            document.getElementById('kpiTongDiem').textContent = customers.reduce((sum, kh) => sum + (kh.diem || 0), 0).toLocaleString('vi-VN');
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-gray-400">Không có khách hàng phù hợp</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(kh => `
+                <tr class="hover:bg-gray-50/80">
+                    <td class="py-3.5 px-4 font-mono font-bold text-emerald-700">${kh.sdt}</td>
+                    <td class="py-3.5 px-4 font-bold text-gray-800">${kh.ten}</td>
+                    <td class="py-3.5 px-4 text-right font-bold text-gray-900">${(kh.diem || 0).toLocaleString('vi-VN')} đ</td>
+                    <td class="py-3.5 px-4 text-center">${badgeHang(kh.hang)}</td>
+                    <td class="py-3.5 px-4">${badgeVoucher(kh.voucherKhaDung)}</td>
+                    <td class="py-3.5 px-4 text-center text-gray-400 space-x-2">
+                        <button onclick="location.href='ChiTietKH.html?sdt=' + encodeURIComponent('${kh.sdt}')" class="hover:text-emerald-700" title="Xem chi tiết / Đổi voucher"><i class="fa-solid fa-eye"></i></button>
+                        <button onclick="deleteCustomer('${kh.sdt}')" class="hover:text-red-600" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openAddModal() {
+            document.getElementById('newSdt').value = '';
+            document.getElementById('newTen').value = '';
+            document.getElementById('addModal').classList.remove('hidden');
+            document.getElementById('addModal').classList.add('flex');
+        }
+
+        function closeAddModal() {
+            document.getElementById('addModal').classList.add('hidden');
+            document.getElementById('addModal').classList.remove('flex');
+        }
+
+        async function submitAddCustomer() {
+            const sdt = document.getElementById('newSdt').value.trim();
+            const ten = document.getElementById('newTen').value.trim();
+            if (!sdt || !ten) {
+                showToast('Vui lòng nhập đủ số điện thoại và họ tên', 'error');
+                return;
+            }
+            try {
+                const res = await fetch(API_BASE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sdt, ten, diem: 0 })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Lỗi không xác định');
+                showToast('Thêm khách hàng thành công!');
+                closeAddModal();
+                loadCustomers();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        async function deleteCustomer(sdt) {
+            if (!confirm(`Xóa khách hàng ${sdt}?`)) return;
+            try {
+                const res = await fetch(`${API_BASE}/${sdt}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Lỗi không xác định');
+                showToast('Đã xóa khách hàng');
+                loadCustomers();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        window.onload = loadCustomers;
+    </script>
+</body>
+</html>
