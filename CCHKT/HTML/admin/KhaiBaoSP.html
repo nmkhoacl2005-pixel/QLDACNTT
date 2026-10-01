@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khai báo sản phẩm - MINIMART.CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body data-page="danhmuc" class="bg-[#f8fafc] flex h-screen overflow-hidden text-gray-800 text-sm">
+
+    <!-- SIDEBAR BÊN TRÁI (đồng nhất trên toàn hệ thống) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between shrink-0">
+        <div class="overflow-y-auto p-4">
+            <div class="flex items-center gap-2 mb-6">
+                <div class="bg-emerald-600 text-white p-2 rounded-lg text-lg flex items-center justify-center w-8 h-8">
+                    <i class="fa-solid fa-shop"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base text-gray-900 leading-none">MINIMART<span class="text-emerald-600">.CRM</span></h1>
+                    <span class="text-[10px] text-gray-400 font-medium">HỆ THỐNG SIÊU THỊ MINI</span>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Nhóm chung</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"><i class="fa-solid fa-table-cells-large w-4"></i> Dashboard</a></li>
+                        <li><a href="quanlynhansu.html" data-key="nhansu" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users-gear w-4"></i> Quản lý Nhân sự</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Thu ngân / POS</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-cash-register w-4"></i> Bán hàng tại quầy</a></li>
+                        <li><a href="DanhSachHD.html" data-key="dshoadon" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-list-ul w-4"></i> Danh sách hóa đơn</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản trị & CRM</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users w-4"></i> Khách hàng & Thành viên</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-chart-line w-4"></i> Báo cáo & Thống kê</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản lý kho</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhMucSP.html" data-key="danhmuc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-box-archive w-4"></i> Danh mục Sản phẩm</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-file-excel w-4"></i> Import Excel</a></li>
+                        <li><a href="NhaCungCap.html" data-key="ncc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-truck-field w-4"></i> Nhà cung cấp</a></li>
+                        <li><a href="PhieuNhap.html" data-key="phieunhap" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-file-import w-4"></i> Phiếu nhập hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gray-50 border border-gray-100">
+                <div class="js-user-avatar w-9 h-9 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">AD</div>
+                <div class="flex-1 min-w-0">
+                    <p class="js-user-name text-xs font-semibold text-gray-800 truncate">—</p>
+                    <p class="js-user-role text-[11px] text-gray-400 truncate">—</p>
+                </div>
+                <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Header -->
+        <header class="h-14 bg-white border-b border-gray-200 px-6 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="relative w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
+                    <input type="text" placeholder="Tìm đơn hàng, mã SKU, khách hàng... (F2)" class="w-full pl-9 pr-4 py-1.5 bg-gray-100 border-none rounded-lg text-xs focus:outline-none">
+                </div>
+                <div class="flex items-center gap-1.5 text-xs font-semibold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+                    <i class="fa-solid fa-store text-emerald-600"></i>
+                    <span>Chi nhánh Quận 1 - Hồ Chí Minh</span>
+                    <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-gray-400"></i>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-4 py-1.5 rounded-lg flex items-center gap-2 text-xs">
+                    <i class="fa-solid fa-plus-circle"></i> Tạo đơn nhanh
+                </button>
+                <button class="relative text-gray-400 hover:text-gray-600">
+                    <i class="fa-regular fa-bell text-base"></i>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="flex items-center gap-3 pl-2 border-l border-gray-200">
+                    <div class="text-right">
+                        <div class="js-user-name font-bold text-xs text-gray-800">—</div>
+                        <div class="js-user-role text-[11px] text-gray-400">—</div>
+                    </div>
+                    <div class="js-user-avatar w-8 h-8 rounded-full border bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">—</div>
+                    <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+            <div class="max-w-3xl mx-auto space-y-5">
+                <div>
+                    <div class="text-[11px] text-gray-400 font-medium">QUẢN LÝ KHO &gt; <a href="SanPham.html" class="hover:underline">Danh mục sản phẩm</a> &gt; <span class="text-gray-600">Khai báo mới</span></div>
+                    <div class="flex items-center gap-3 mt-1">
+                        <h1 class="text-xl font-bold text-gray-900">Khai báo Sản phẩm Mới</h1>
+                        <span class="bg-amber-100 text-amber-700 text-[11px] font-bold px-2 py-0.5 rounded-full">Tồn kho ban đầu: 0</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Chỉ khai báo thông tin nhận diện. Số lượng tồn được cộng khi lập Phiếu nhập hàng.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-5">
+                    <div>
+                        <label for="maSp" class="block text-xs font-bold text-gray-700 mb-1.5">Mã sản phẩm (SKU) <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-barcode absolute left-3 top-3 text-gray-400 text-xs"></i>
+                            <input id="maSp" maxlength="20" placeholder="Ví dụ: SKU-VM-1002" class="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <p id="maSpErr" class="hidden text-[11px] text-red-600 mt-1"></p>
+                    </div>
+                    <div>
+                        <label for="tenSp" class="block text-xs font-bold text-gray-700 mb-1.5">Tên sản phẩm <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-box absolute left-3 top-3 text-gray-400 text-xs"></i>
+                            <input id="tenSp" maxlength="200" placeholder="Ví dụ: Sữa tươi Dalat Milk tiệt trùng ít đường 450ml" class="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <p id="tenSpErr" class="hidden text-[11px] text-red-600 mt-1"></p><p class="text-[11px] text-gray-400 mt-1">Nên gồm: Tên nhãn hàng + Phân loại + Dung tích/Trọng lượng.</p>
+                    </div>
+                    <div>
+                        <label for="donGia" class="block text-xs font-bold text-gray-700 mb-1.5">Đơn giá bán (₫) <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-tag absolute left-3 top-3 text-gray-400 text-xs"></i>
+                            <input id="donGia" inputmode="numeric" placeholder="Ví dụ: 34500" class="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <p id="donGiaErr" class="hidden text-[11px] text-red-600 mt-1"></p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">Số lượng tồn ban đầu</label>
+                        <input value="0" disabled class="w-full px-3 py-2.5 border border-gray-200 bg-gray-50 text-gray-400 rounded-lg text-sm cursor-not-allowed">
+                        <p class="text-[11px] text-gray-400 mt-1">Cố định 0 — nhập kho qua Phiếu nhập hàng.</p>
+                    </div>
+
+                    <div id="formErr" class="hidden bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg px-3 py-2"></div>
+
+                    <div class="flex justify-end gap-2 pt-2 border-t border-gray-100">
+                        <a href="SanPham.html" class="border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium px-4 py-2 rounded-lg text-xs">Hủy bỏ</a>
+                        <button id="btnNext" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-medium px-4 py-2 rounded-lg text-xs">Lưu & Thêm tiếp</button>
+                        <button id="btnSave" class="bg-emerald-700 hover:bg-emerald-800 disabled:opacity-60 text-white font-medium px-5 py-2 rounded-lg text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> <span>Lưu sản phẩm</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toastContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
+
+    <script src="common.js"></script>
+    <script>
+        const API_SP = 'http://localhost:8080/api/sanpham';
+        const $ = id => document.getElementById(id);
+        const FIELDS = ['maSp', 'tenSp', 'donGia'];
+
+        function showToast(message, type = 'success') {
+            const t = document.createElement('div');
+            t.className = `${type === 'error' ? 'bg-red-600' : 'bg-emerald-600'} text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-lg`;
+            t.textContent = message;
+            $('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        function setErr(id, msg) {
+            const el = $(id + 'Err');
+            el.textContent = msg || '';
+            el.classList.toggle('hidden', !msg);
+        }
+
+        $('donGia').addEventListener('input', e => e.target.value = e.target.value.replace(/\D/g, ''));
+
+        async function save(keepAdding) {
+            const maSp = $('maSp').value.trim();
+            const tenSp = $('tenSp').value.trim().replace(/\s+/g, ' ');
+            const donGiaRaw = $('donGia').value.trim();
+            FIELDS.forEach(f => setErr(f)); $('formErr').classList.add('hidden');
+
+            let ok = true;
+            if (!maSp) { setErr('maSp', 'Vui lòng nhập mã sản phẩm'); ok = false; }
+            if (!tenSp) { setErr('tenSp', 'Vui lòng nhập tên sản phẩm'); ok = false; }
+            if (donGiaRaw === '') { setErr('donGia', 'Vui lòng nhập đơn giá'); ok = false; }
+            if (!ok) return;
+
+            const btns = [$('btnSave'), $('btnNext')];
+            btns.forEach(b => b.disabled = true);
+            try {
+                const res = await fetch(API_SP, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ maSp, tenSp, donGia: Number(donGiaRaw), soLuong: 0 })
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.status === 201) {
+                    showToast('Đã khai báo sản phẩm ' + data.tenSp);
+                    if (keepAdding) {
+                        FIELDS.forEach(f => $(f).value = '');
+                        $('maSp').focus();
+                    } else {
+                        setTimeout(() => window.location.href = 'SanPham.html', 800);
+                    }
+                    return;
+                }
+                if (res.status === 409) setErr('maSp', data.message || 'Mã sản phẩm đã tồn tại');
+                else { $('formErr').textContent = data.message || ('Lỗi máy chủ (HTTP ' + res.status + ')'); $('formErr').classList.remove('hidden'); }
+            } catch (err) {
+                console.error(err);
+                $('formErr').textContent = 'Không thể kết nối đến máy chủ backend (http://localhost:8080)';
+                $('formErr').classList.remove('hidden');
+            } finally {
+                btns.forEach(b => b.disabled = false);
+            }
+        }
+
+        $('btnSave').addEventListener('click', () => save(false));
+        $('btnNext').addEventListener('click', () => save(true));
+        FIELDS.forEach(id => $(id).addEventListener('keydown', e => { if (e.key === 'Enter') save(false); }));
+    </script>
+</body>
+</html>
