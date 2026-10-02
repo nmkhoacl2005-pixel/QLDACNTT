@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh mục sản phẩm - MINIMART.CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body data-page="danhmuc" class="bg-[#f8fafc] flex h-screen overflow-hidden text-gray-800 text-sm">
+
+    <!-- SIDEBAR BÊN TRÁI (đồng nhất trên toàn hệ thống) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between shrink-0">
+        <div class="overflow-y-auto p-4">
+            <div class="flex items-center gap-2 mb-6">
+                <div class="bg-emerald-600 text-white p-2 rounded-lg text-lg flex items-center justify-center w-8 h-8">
+                    <i class="fa-solid fa-shop"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base text-gray-900 leading-none">MINIMART<span class="text-emerald-600">.CRM</span></h1>
+                    <span class="text-[10px] text-gray-400 font-medium">HỆ THỐNG SIÊU THỊ MINI</span>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Nhóm chung</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"><i class="fa-solid fa-table-cells-large w-4"></i> Dashboard</a></li>
+                        <li><a href="quanlynhansu.html" data-key="nhansu" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users-gear w-4"></i> Quản lý Nhân sự</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Thu ngân / POS</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-cash-register w-4"></i> Bán hàng tại quầy</a></li>
+                        <li><a href="DanhSachHD.html" data-key="dshoadon" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-list-ul w-4"></i> Danh sách hóa đơn</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản trị & CRM</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users w-4"></i> Khách hàng & Thành viên</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-chart-line w-4"></i> Báo cáo & Thống kê</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản lý kho</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhMucSP.html" data-key="danhmuc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-box-archive w-4"></i> Danh mục Sản phẩm</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-file-excel w-4"></i> Import Excel</a></li>
+                        <li><a href="NhaCungCap.html" data-key="ncc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-truck-field w-4"></i> Nhà cung cấp</a></li>
+                        <li><a href="PhieuNhap.html" data-key="phieunhap" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-file-import w-4"></i> Phiếu nhập hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gray-50 border border-gray-100">
+                <div class="js-user-avatar w-9 h-9 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">AD</div>
+                <div class="flex-1 min-w-0">
+                    <p class="js-user-name text-xs font-semibold text-gray-800 truncate">—</p>
+                    <p class="js-user-role text-[11px] text-gray-400 truncate">—</p>
+                </div>
+                <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Header -->
+        <header class="h-14 bg-white border-b border-gray-200 px-6 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="relative w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
+                    <input type="text" placeholder="Tìm đơn hàng, mã SKU, khách hàng... (F2)" class="w-full pl-9 pr-4 py-1.5 bg-gray-100 border-none rounded-lg text-xs focus:outline-none">
+                </div>
+                <div class="flex items-center gap-1.5 text-xs font-semibold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+                    <i class="fa-solid fa-store text-emerald-600"></i>
+                    <span>Chi nhánh Quận 1 - Hồ Chí Minh</span>
+                    <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-gray-400"></i>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-4 py-1.5 rounded-lg flex items-center gap-2 text-xs">
+                    <i class="fa-solid fa-plus-circle"></i> Tạo đơn nhanh
+                </button>
+                <button class="relative text-gray-400 hover:text-gray-600">
+                    <i class="fa-regular fa-bell text-base"></i>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="flex items-center gap-3 pl-2 border-l border-gray-200">
+                    <div class="text-right">
+                        <div class="js-user-name font-bold text-xs text-gray-800">—</div>
+                        <div class="js-user-role text-[11px] text-gray-400">—</div>
+                    </div>
+                    <div class="js-user-avatar w-8 h-8 rounded-full border bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">—</div>
+                    <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 space-y-5">
+            <div class="flex justify-between items-center">
+                <div>
+                    <div class="text-[11px] text-gray-400 font-medium">KHO HÀNG MINIMART &gt; <span class="text-gray-600">Danh mục & Bảng giá</span></div>
+                    <div class="flex items-center gap-3 mt-1">
+                        <h1 class="text-xl font-bold text-gray-900">Danh Mục Sản Phẩm</h1>
+                        <span id="totalLabel" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded-full">0 SKU</span>
+                    </div>
+                </div>
+                <div class="flex gap-2 text-xs">
+                    <button onclick="load()" class="border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate-right"></i> Tải lại</button>
+                    <a href="PhieuNhap.html" class="border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium px-3 py-1.5 rounded-lg"><i class="fa-solid fa-file-import"></i> Nhập hàng</a>
+                    <a href="KhaiBaoSP.html" class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-3.5 py-1.5 rounded-lg"><i class="fa-solid fa-plus-circle"></i> Thêm sản phẩm</a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4">
+                <div class="bg-white border border-gray-200 rounded-2xl p-4"><span class="text-xs text-gray-400 font-medium">Đang kinh doanh</span><div id="kAll" class="text-2xl font-black my-1">0</div><span class="text-[11px] text-gray-400">Tổng số SKU</span></div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-4"><span class="text-xs text-gray-400 font-medium">Tồn an toàn (≥10)</span><div id="kOk" class="text-2xl font-black text-emerald-700 my-1">0</div><span class="text-[11px] text-gray-400">Còn hàng đủ bán</span></div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-4"><span class="text-xs text-gray-400 font-medium">Sắp hết hàng (&lt;10)</span><div id="kLow" class="text-2xl font-black text-blue-600 my-1">0</div><span class="text-[11px] text-gray-400">Cần bổ sung</span></div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-4"><span class="text-xs text-gray-400 font-medium">Hết hàng (Tồn 0)</span><div id="kOut" class="text-2xl font-black text-red-600 my-1">0</div><span class="text-[11px] text-gray-400">Chờ nhập hàng</span></div>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-2xl p-4 flex flex-wrap items-center gap-3">
+                <div class="relative w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
+                    <input id="q" placeholder="Tìm theo tên hoặc mã SKU..." class="w-full pl-9 pr-3 py-1.5 bg-gray-100 rounded-lg text-xs focus:outline-none">
+                </div>
+                <div id="filters" class="flex gap-2 text-xs font-semibold"></div>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                <table class="w-full text-xs">
+                    <thead class="bg-gray-50 text-gray-500 uppercase text-[11px]">
+                        <tr><th class="text-left px-4 py-3">Mã SKU</th><th class="text-left px-4 py-3">Sản phẩm</th><th class="text-right px-4 py-3">Đơn giá bán</th><th class="text-right px-4 py-3">Tồn kho</th><th class="text-center px-4 py-3">Trạng thái</th><th class="text-center px-4 py-3">Thao tác</th></tr>
+                    </thead>
+                    <tbody id="tbody" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal sửa -->
+    <div id="editModal" class="hidden fixed inset-0 bg-black/40 z-40 flex items-center justify-center">
+        <div class="bg-white rounded-2xl p-6 w-[440px] space-y-4">
+            <h3 class="font-bold text-base">Sửa sản phẩm <span id="eMa" class="text-emerald-700"></span></h3>
+            <div><label class="block text-xs font-bold mb-1">Tên sản phẩm</label><input id="eTen" maxlength="200" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"></div>
+            <div><label class="block text-xs font-bold mb-1">Đơn giá (₫)</label><input id="eGia" inputmode="numeric" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"></div>
+            <p class="text-[11px] text-gray-400">Tồn kho chỉ thay đổi qua Phiếu nhập hàng / bán hàng.</p>
+            <div class="flex justify-end gap-2 text-xs">
+                <button onclick="closeEdit()" class="border border-gray-300 px-4 py-2 rounded-lg">Hủy</button>
+                <button onclick="saveEdit()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-2 rounded-lg font-medium">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
+
+    <script src="common.js"></script>
+    <script>
+        const API = 'http://localhost:8080/api/sanpham';
+        let all = [], filter = 'all', editing = null;
+        const $ = id => document.getElementById(id);
+        
+        function showToast(message, type = 'success') {
+            const t = document.createElement('div');
+            t.className = (type === 'error' ? 'bg-red-600' : 'bg-emerald-600') + ' text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-lg';
+            t.textContent = message;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+        const fmt = n => Number(n || 0).toLocaleString('vi-VN');
+        const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+        const LOW = 10;
+        const status = sl => sl <= 0 ? ['Cháy hàng', 'bg-red-100 text-red-700'] : sl < LOW ? ['Sắp hết', 'bg-blue-100 text-blue-700'] : ['Đang bán', 'bg-emerald-100 text-emerald-700'];
+        const FILTERS = [['all', 'Tất cả'], ['ok', 'Còn hàng'], ['low', 'Sắp hết'], ['out', 'Hết hàng']];
+
+        function renderFilters() {
+            $('filters').innerHTML = FILTERS.map(([k, l]) =>
+                `<button data-k="${k}" class="px-3 py-1.5 rounded-lg ${k === filter ? 'bg-emerald-700 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}">${l}</button>`).join('');
+            $('filters').querySelectorAll('button').forEach(b => b.onclick = () => { filter = b.dataset.k; renderFilters(); render(); });
+        }
+
+        function render() {
+            const kw = $('q').value.trim().toLowerCase();
+            const rows = all.filter(p => {
+                if (kw && !(p.maSp.toLowerCase().includes(kw) || p.tenSp.toLowerCase().includes(kw))) return false;
+                if (filter === 'ok') return p.soLuong >= LOW;
+                if (filter === 'low') return p.soLuong > 0 && p.soLuong < LOW;
+                if (filter === 'out') return p.soLuong <= 0;
+                return true;
+            });
+            $('tbody').innerHTML = rows.length ? rows.map(p => {
+                const [txt, cls] = status(p.soLuong);
+                const sl = p.soLuong <= 0 ? 'text-red-600' : p.soLuong < LOW ? 'text-blue-600' : 'text-emerald-700';
+                return `<tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 font-mono text-[11px]">${esc(p.maSp)}</td>
+                    <td class="px-4 py-3 font-semibold text-gray-800">${esc(p.tenSp)}</td>
+                    <td class="px-4 py-3 text-right font-bold">${fmt(p.donGia)} đ</td>
+                    <td class="px-4 py-3 text-right font-bold ${sl}">${fmt(p.soLuong)}</td>
+                    <td class="px-4 py-3 text-center"><span class="${cls} text-[10px] font-bold px-2 py-0.5 rounded-full">${txt}</span></td>
+                    <td class="px-4 py-3 text-center space-x-3 text-gray-400">
+                        <button title="Sửa" onclick="openEdit('${esc(p.maSp)}')" class="hover:text-emerald-700"><i class="fa-solid fa-pen"></i></button>
+                        <button title="Xóa" onclick="del('${esc(p.maSp)}')" class="hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                    </td></tr>`;
+            }).join('') : '<tr><td colspan="6" class="py-8 text-center text-gray-400">Không có sản phẩm phù hợp</td></tr>';
+        }
+
+        function kpis() {
+            $('totalLabel').textContent = all.length + ' SKU';
+            $('kAll').textContent = all.length;
+            $('kOk').textContent = all.filter(p => p.soLuong >= LOW).length;
+            $('kLow').textContent = all.filter(p => p.soLuong > 0 && p.soLuong < LOW).length;
+            $('kOut').textContent = all.filter(p => p.soLuong <= 0).length;
+        }
+
+        async function load() {
+            $('tbody').innerHTML = '<tr><td colspan="6" class="py-8 text-center text-gray-400">Đang tải dữ liệu...</td></tr>';
+            try {
+                const res = await fetch(API);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                all = await res.json();
+                kpis(); render();
+            } catch (e) {
+                $('tbody').innerHTML = '<tr><td colspan="6" class="py-8 text-center text-red-500">Không thể kết nối đến máy chủ backend (http://localhost:8080)</td></tr>';
+            }
+        }
+
+        function openEdit(ma) {
+            editing = all.find(p => p.maSp === ma);
+            $('eMa').textContent = ma; $('eTen').value = editing.tenSp; $('eGia').value = editing.donGia;
+            $('editModal').classList.remove('hidden');
+        }
+        function closeEdit() { $('editModal').classList.add('hidden'); editing = null; }
+
+        async function saveEdit() {
+            const tenSp = $('eTen').value.trim(), gia = $('eGia').value.trim();
+            if (!tenSp || gia === '' || isNaN(gia)) return showToast('Tên và đơn giá không hợp lệ', 'error');
+            const res = await fetch(`${API}/${encodeURIComponent(editing.maSp)}`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tenSp, donGia: Number(gia) })
+            });
+            if (res.ok) { showToast('Đã cập nhật sản phẩm'); closeEdit(); load(); }
+            else showToast('Cập nhật thất bại (HTTP ' + res.status + ')', 'error');
+        }
+
+        async function del(ma) {
+            if (!confirm('Xóa sản phẩm ' + ma + '?')) return;
+            const res = await fetch(`${API}/${encodeURIComponent(ma)}`, { method: 'DELETE' });
+            if (res.ok) { showToast('Đã xóa sản phẩm'); load(); }
+            else showToast('Không xóa được (sản phẩm có thể đã có trong hóa đơn)', 'error');
+        }
+
+        $('q').addEventListener('input', render);
+        renderFilters(); load();
+    </script>
+</body>
+</html>

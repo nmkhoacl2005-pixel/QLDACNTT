@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu nhập hàng - MINIMART.CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body data-page="phieunhap" class="bg-[#f8fafc] flex h-screen overflow-hidden text-gray-800 text-sm">
+
+    <!-- SIDEBAR BÊN TRÁI (đồng nhất trên toàn hệ thống) -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between shrink-0">
+        <div class="overflow-y-auto p-4">
+            <div class="flex items-center gap-2 mb-6">
+                <div class="bg-emerald-600 text-white p-2 rounded-lg text-lg flex items-center justify-center w-8 h-8">
+                    <i class="fa-solid fa-shop"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base text-gray-900 leading-none">MINIMART<span class="text-emerald-600">.CRM</span></h1>
+                    <span class="text-[10px] text-gray-400 font-medium">HỆ THỐNG SIÊU THỊ MINI</span>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Nhóm chung</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"><i class="fa-solid fa-table-cells-large w-4"></i> Dashboard</a></li>
+                        <li><a href="quanlynhansu.html" data-key="nhansu" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users-gear w-4"></i> Quản lý Nhân sự</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Thu ngân / POS</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-cash-register w-4"></i> Bán hàng tại quầy</a></li>
+                        <li><a href="DanhSachHD.html" data-key="dshoadon" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-list-ul w-4"></i> Danh sách hóa đơn</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản trị & CRM</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users w-4"></i> Khách hàng & Thành viên</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-chart-line w-4"></i> Báo cáo & Thống kê</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản lý kho</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhMucSP.html" data-key="danhmuc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-box-archive w-4"></i> Danh mục Sản phẩm</a></li>
+                        <li><a href="#" class="flex items-center gap-3 px-3 py-2 text-gray-400 cursor-not-allowed rounded-lg" title="Đang phát triển"><i class="fa-solid fa-file-excel w-4"></i> Import Excel</a></li>
+                        <li><a href="NhaCungCap.html" data-key="ncc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-truck-field w-4"></i> Nhà cung cấp</a></li>
+                        <li><a href="PhieuNhap.html" data-key="phieunhap" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-file-import w-4"></i> Phiếu nhập hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gray-50 border border-gray-100">
+                <div class="js-user-avatar w-9 h-9 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">AD</div>
+                <div class="flex-1 min-w-0">
+                    <p class="js-user-name text-xs font-semibold text-gray-800 truncate">—</p>
+                    <p class="js-user-role text-[11px] text-gray-400 truncate">—</p>
+                </div>
+                <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Header -->
+        <header class="h-14 bg-white border-b border-gray-200 px-6 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="relative w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400"></i>
+                    <input type="text" placeholder="Tìm đơn hàng, mã SKU, khách hàng... (F2)" class="w-full pl-9 pr-4 py-1.5 bg-gray-100 border-none rounded-lg text-xs focus:outline-none">
+                </div>
+                <div class="flex items-center gap-1.5 text-xs font-semibold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+                    <i class="fa-solid fa-store text-emerald-600"></i>
+                    <span>Chi nhánh Quận 1 - Hồ Chí Minh</span>
+                    <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-gray-400"></i>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-4 py-1.5 rounded-lg flex items-center gap-2 text-xs">
+                    <i class="fa-solid fa-plus-circle"></i> Tạo đơn nhanh
+                </button>
+                <button class="relative text-gray-400 hover:text-gray-600">
+                    <i class="fa-regular fa-bell text-base"></i>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="flex items-center gap-3 pl-2 border-l border-gray-200">
+                    <div class="text-right">
+                        <div class="js-user-name font-bold text-xs text-gray-800">—</div>
+                        <div class="js-user-role text-[11px] text-gray-400">—</div>
+                    </div>
+                    <div class="js-user-avatar w-8 h-8 rounded-full border bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">—</div>
+                    <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6">
+            <div class="max-w-4xl mx-auto space-y-5">
+                <div>
+                    <div class="text-[11px] text-gray-400 font-medium">QUẢN LÝ KHO &gt; <span class="text-gray-600">Phiếu nhập hàng</span></div>
+                    <h1 class="text-xl font-bold text-gray-900 mt-1">Tạo Phiếu Nhập Hàng Mới</h1>
+                    <p class="text-xs text-gray-500 mt-1">Phiếu được lưu lại và số lượng nhập được cộng vào tồn kho của từng sản phẩm.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 space-y-5">
+                    <div class="grid grid-cols-3 gap-4 text-xs">
+                        <div><label for="ncc" class="block font-bold text-gray-700 mb-1">Nhà cung cấp <span class="text-red-500">*</span></label>
+                            <select id="ncc" class="w-full border border-gray-300 rounded-lg px-3 py-2"><option value="">— Chọn nhà cung cấp —</option></select>
+                            <p id="nccHint" class="hidden text-[11px] text-amber-600 mt-1"></p></div>
+                        <div><div class="font-bold text-gray-700 mb-1">Ngày ghi nhận</div><div id="ngay" class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2"></div></div>
+                        <div><div class="font-bold text-gray-700 mb-1">Người lập phiếu</div><div class="js-user-name bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">—</div></div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <h2 class="font-bold text-sm">Danh mục hàng hóa nhập kho <span id="cnt" class="ml-2 bg-emerald-100 text-emerald-800 text-[11px] px-2 py-0.5 rounded-full">0 sản phẩm</span></h2>
+                        <button onclick="addLine()" class="bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 text-xs font-medium px-3 py-1.5 rounded-lg">+ Thêm dòng sản phẩm</button>
+                    </div>
+
+                    <table class="w-full text-xs">
+                        <thead class="bg-gray-50 text-gray-500 uppercase text-[11px]">
+                            <tr><th class="px-3 py-2 text-left w-10">STT</th><th class="px-3 py-2 text-left">Sản phẩm (mã hoặc tên)</th><th class="px-3 py-2 text-right w-28">Tồn hiện tại</th><th class="px-3 py-2 text-right w-32">Số lượng nhập</th><th class="px-3 py-2 w-10"></th></tr>
+                        </thead>
+                        <tbody id="lines" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                    <datalist id="spList"></datalist>
+
+                    <div id="formErr" class="hidden bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg px-3 py-2"></div>
+
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                        <div class="text-sm">Tổng số lượng nhập: <span id="tong" class="font-black text-emerald-700 text-lg">0</span> đơn vị</div>
+                        <div class="flex gap-2 text-xs">
+                            <a href="DanhMucSP.html" class="border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg">Hủy bỏ</a>
+                            <button id="btnSave" class="bg-emerald-700 hover:bg-emerald-800 disabled:opacity-60 text-white font-medium px-5 py-2 rounded-lg"><i class="fa-solid fa-floppy-disk"></i> Xác nhận nhập kho</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                    <div class="px-6 py-4 flex justify-between items-center border-b border-gray-100">
+                        <h2 class="font-bold text-sm">Lịch sử phiếu nhập gần đây</h2>
+                        <button onclick="loadHistory()" class="text-xs text-gray-500 hover:text-gray-800"><i class="fa-solid fa-rotate-right"></i> Tải lại</button>
+                    </div>
+                    <table class="w-full text-xs">
+                        <thead class="bg-gray-50 text-gray-500 uppercase text-[11px]">
+                            <tr><th class="px-4 py-2 text-left">Mã phiếu</th><th class="px-4 py-2 text-left">Ngày nhập</th><th class="px-4 py-2 text-left">Nhà cung cấp</th><th class="px-4 py-2 text-right">Mặt hàng</th><th class="px-4 py-2 text-right">Tổng SL</th><th class="px-4 py-2 text-left">Người lập</th></tr>
+                        </thead>
+                        <tbody id="history" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toastContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
+
+    <script src="common.js"></script>
+    <script>
+        const API_SP = 'http://localhost:8080/api/sanpham';
+        const API_NCC = 'http://localhost:8080/api/nhacungcap';
+        const API_PN = 'http://localhost:8080/api/phieunhap';
+        const $ = id => document.getElementById(id);
+        let products = [];
+        
+        function showToast(message, type = 'success') {
+            const t = document.createElement('div');
+            t.className = (type === 'error' ? 'bg-red-600' : 'bg-emerald-600') + ' text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-lg';
+            t.textContent = message;
+            document.getElementById('toastContainer').appendChild(t);
+            setTimeout(() => t.remove(), 3500);
+        }
+        const fmt = n => Number(n || 0).toLocaleString('vi-VN');
+        const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        const fmtDate = s => s ? new Date(s).toLocaleString('vi-VN') : '';
+
+        $('ngay').textContent = new Date().toLocaleDateString('vi-VN');
+
+        // khớp theo mã hoặc "mã — tên" trong datalist
+        const find = v => { const ma = v.trim().split(' — ')[0]; return products.find(p => p.maSp === ma) || null; };
+
+        function addLine() {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td class="px-3 py-2 stt text-gray-400"></td>
+                <td class="px-3 py-2"><input list="spList" placeholder="Chọn sản phẩm..." class="sp w-full px-2 py-1.5 border border-gray-300 rounded-lg"></td>
+                <td class="px-3 py-2 text-right ton text-gray-500">—</td>
+                <td class="px-3 py-2"><input inputmode="numeric" class="sl w-full px-2 py-1.5 border border-gray-300 rounded-lg text-right" placeholder="0"></td>
+                <td class="px-3 py-2 text-center"><button class="rm text-gray-400 hover:text-red-600"><i class="fa-solid fa-xmark"></i></button></td>`;
+            const sp = tr.querySelector('.sp'), sl = tr.querySelector('.sl');
+            sp.addEventListener('input', () => { const p = find(sp.value); tr.querySelector('.ton').textContent = p ? fmt(p.soLuong) : '—'; });
+            sl.addEventListener('input', () => { sl.value = sl.value.replace(/\D/g, ''); total(); });
+            tr.querySelector('.rm').onclick = () => { tr.remove(); total(); };
+            $('lines').appendChild(tr); total();
+        }
+
+        function total() {
+            const rows = [...$('lines').children];
+            rows.forEach((r, i) => r.querySelector('.stt').textContent = i + 1);
+            $('cnt').textContent = rows.length + ' sản phẩm';
+            $('tong').textContent = fmt(rows.reduce((s, r) => s + Number(r.querySelector('.sl').value || 0), 0));
+        }
+
+        function fail(msg) { $('formErr').textContent = msg; $('formErr').classList.remove('hidden'); }
+
+        async function save() {
+            $('formErr').classList.add('hidden');
+            const maNcc = $('ncc').value;
+            if (!maNcc) return fail('Vui lòng chọn nhà cung cấp');
+            const items = [];
+            for (const r of $('lines').children) {
+                const stt = r.querySelector('.stt').textContent;
+                const p = find(r.querySelector('.sp').value), q = Number(r.querySelector('.sl').value || 0);
+                if (!p) return fail('Dòng ' + stt + ': chưa chọn sản phẩm hợp lệ');
+                if (q <= 0) return fail('Dòng ' + stt + ': số lượng nhập phải lớn hơn 0');
+                items.push({ maSp: p.maSp, soLuong: q });
+            }
+            if (!items.length) return fail('Phiếu chưa có sản phẩm nào');
+
+            const user = getCurrentUser();
+            $('btnSave').disabled = true;
+            try {
+                const res = await fetch(API_PN, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ maNcc, tenNhanVien: user ? (user.hoTen || user.taiKhoan) : null, items })
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.status === 201) {
+                    showToast('Đã lưu phiếu ' + data.maPn + ' (+' + fmt(data.tongSoLuong) + ' đơn vị)');
+                    $('lines').innerHTML = ''; addLine(); $('ncc').value = '';
+                    await Promise.all([loadProducts(), loadHistory()]);
+                } else fail(data.message || 'Lỗi máy chủ (HTTP ' + res.status + ')');
+            } catch (e) {
+                fail('Không thể kết nối đến máy chủ backend (http://localhost:8080)');
+            } finally { $('btnSave').disabled = false; }
+        }
+
+        async function loadProducts() {
+            products = await (await fetch(API_SP)).json();
+            $('spList').innerHTML = products.map(p => `<option value="${esc(p.maSp)} — ${esc(p.tenSp)}"></option>`).join('');
+        }
+
+        async function loadNcc() {
+            const hint = $('nccHint');
+            hint.classList.add('hidden');
+            try {
+                const res = await fetch(API_NCC);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const active = (await res.json()).filter(n => n.trangThai === 'HOAT_DONG');
+                $('ncc').innerHTML = '<option value="">— Chọn nhà cung cấp —</option>' +
+                    active.map(n => `<option value="${esc(n.maNcc)}">${esc(n.tenNcc)} (${esc(n.maNcc)})</option>`).join('');
+                if (!active.length) {
+                    hint.innerHTML = 'Chưa có nhà cung cấp đang giao dịch. <a href="NhaCungCap.html" class="underline font-semibold">Thêm nhà cung cấp</a>';
+                    hint.classList.remove('hidden');
+                }
+            } catch (e) {
+                console.error(e);
+                hint.textContent = 'Không tải được danh sách nhà cung cấp (kiểm tra backend đã chạy bản mới và /api/nhacungcap)';
+                hint.classList.remove('hidden');
+            }
+        }
+
+        async function loadHistory() {
+            const box = $('history');
+            try {
+                const list = (await (await fetch(API_PN)).json()).slice(0, 10);
+                box.innerHTML = list.length ? list.map(p => `<tr class="hover:bg-gray-50 cursor-pointer" onclick="toggleDetail('${esc(p.maPn)}', this)">
+                    <td class="px-4 py-2 font-mono text-[11px]">${esc(p.maPn)}</td><td class="px-4 py-2">${fmtDate(p.ngayNhap)}</td>
+                    <td class="px-4 py-2">${esc(p.tenNcc)}</td><td class="px-4 py-2 text-right">${p.soMatHang}</td>
+                    <td class="px-4 py-2 text-right font-bold text-emerald-700">${fmt(p.tongSoLuong)}</td><td class="px-4 py-2">${esc(p.tenNhanVien)}</td></tr>`).join('')
+                    : '<tr><td colspan="6" class="py-6 text-center text-gray-400">Chưa có phiếu nhập nào</td></tr>';
+            } catch (e) { box.innerHTML = '<tr><td colspan="6" class="py-6 text-center text-red-500">Không tải được lịch sử</td></tr>'; }
+        }
+
+        async function toggleDetail(ma, tr) {
+            const next = tr.nextElementSibling;
+            if (next && next.dataset.detail === ma) return next.remove();
+            const d = await (await fetch(`${API_PN}/${encodeURIComponent(ma)}`)).json();
+            const row = document.createElement('tr');
+            row.dataset.detail = ma;
+            row.innerHTML = `<td colspan="6" class="px-4 py-3 bg-gray-50 text-[11px] text-gray-600">` +
+                d.items.map(i => `<div class="flex justify-between max-w-md"><span>${esc(i.maSp)} — ${esc(i.tenSp)}</span><b>+${fmt(i.soLuong)}</b></div>`).join('') + `</td>`;
+            tr.after(row);
+        }
+
+        async function init() {
+            await loadNcc();
+            loadHistory();
+            try { await loadProducts(); }
+            catch (e) { fail('Không thể kết nối đến máy chủ backend (http://localhost:8080)'); }
+            addLine();
+        }
+        $('btnSave').addEventListener('click', save);
+        init();
+    </script>
+</body>
+</html>
