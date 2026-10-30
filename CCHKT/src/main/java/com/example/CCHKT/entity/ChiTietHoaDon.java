@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ChiTietHoaDon {
 
     @EmbeddedId
@@ -17,12 +16,12 @@ public class ChiTietHoaDon {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("maHd")
-    @JoinColumn(name = "ma_hd")
+    @JoinColumn(name = "ma_hd", foreignKey = @ForeignKey(name = "FK_cthd_hd"))
     private HoaDon hoaDon;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("maSp")
-    @JoinColumn(name = "ma_sp")
+    @JoinColumn(name = "ma_sp", foreignKey = @ForeignKey(name = "FK_cthd_sp"))
     private SanPham sanPham;
 
     @Column(name = "so_luong", nullable = false)

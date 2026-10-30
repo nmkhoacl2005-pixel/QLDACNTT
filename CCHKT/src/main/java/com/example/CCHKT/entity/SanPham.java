@@ -14,14 +14,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class SanPham {
 
     @Id
     @Column(name = "ma_sp", length = 20, nullable = false)
     private String maSp;
 
-    @Column(name = "ten_sp", length = 200, nullable = false)
+    @Column(name = "ten_sp", length = 200, nullable = false, columnDefinition = "NVARCHAR(255)")
     private String tenSp;
 
     @Column(name = "so_luong", nullable = false)

@@ -10,14 +10,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class KhachHang {
 
     @Id
     @Column(name = "sdt", length = 12, nullable = false)
     private String sdt;
 
-    @Column(name = "ten", length = 100, nullable = false)
+    @Column(name = "ten", length = 100, nullable = false, columnDefinition = "NVARCHAR(255)")
     private String ten;
 
     @Column(name = "diem", nullable = false)

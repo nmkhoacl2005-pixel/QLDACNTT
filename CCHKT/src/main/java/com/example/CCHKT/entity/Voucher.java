@@ -1,5 +1,6 @@
 package com.example.CCHKT.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -18,6 +19,12 @@ public class Voucher {
     // Lưu trực tiếp SĐT (không map quan hệ) để tránh lỗi lazy-loading khi trả JSON
     @Column(name = "sdt", length = 12, nullable = false)
     private String sdt;
+
+    // Quan hệ chỉ đọc để tạo FK voucher.sdt -> khach_hang.sdt
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sdt", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "FK_voucher_kh"))
+    private KhachHang khachHang;
 
     // 10, 20 hoặc 30 (%)
     @Column(name = "phan_tram_giam", nullable = false)
