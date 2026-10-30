@@ -10,7 +10,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ChiTietHoaDonId implements Serializable {
 
     @Column(name = "ma_hd", length = 20)

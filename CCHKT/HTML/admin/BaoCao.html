@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINIMART.CRM - Báo cáo & Thống kê</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-btn.active { background:#ecfdf5; color:#047857; font-weight:700; box-shadow: inset 0 0 0 1px #a7f3d0; }
+        @media print {
+            aside, header, .no-print { display: none !important; }
+            body { display: block !important; height: auto !important; overflow: visible !important; background: #fff; }
+            main { overflow: visible !important; }
+            .flex-1.flex.flex-col { height: auto !important; overflow: visible !important; }
+        }
+    </style>
+</head>
+<body data-page="baocao" class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-sm">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between shrink-0">
+        <div class="overflow-y-auto p-4">
+            <div class="flex items-center gap-2 mb-6">
+                <div class="bg-emerald-600 text-white p-2 rounded-lg text-lg flex items-center justify-center w-8 h-8">
+                    <i class="fa-solid fa-shop"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base text-gray-900 leading-none">MINIMART<span class="text-emerald-600">.CRM</span></h1>
+                    <span class="text-[10px] text-gray-400 font-medium">HỆ THỐNG SIÊU THỊ MINI</span>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Nhóm chung</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="Dashboard.html" data-key="dashboard" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-table-cells-large w-4"></i> Dashboard</a></li>
+                        <li><a href="quanlynhansu.html" data-key="nhansu" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users-gear w-4"></i> Quản lý Nhân sự</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Thu ngân / POS</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-cash-register w-4"></i> Bán hàng tại quầy</a></li>
+                        <li><a href="DanhSachHD.html" data-key="dshoadon" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-list-ul w-4"></i> Danh sách hóa đơn</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản trị & CRM</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users w-4"></i> Khách hàng & Thành viên</a></li>
+                        <li><a href="BaoCao.html" data-key="baocao" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-chart-line w-4"></i> Báo cáo & Thống kê</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản lý kho</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhMucSP.html" data-key="danhmuc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-box-archive w-4"></i> Danh mục Sản phẩm</a></li>
+                        <li><a href="NhaCungCap.html" data-key="ncc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-truck-field w-4"></i> Nhà cung cấp</a></li>
+                        <li><a href="PhieuNhap.html" data-key="phieunhap" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-file-import w-4"></i> Phiếu nhập hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gray-50 border border-gray-100">
+                <div class="js-user-avatar w-9 h-9 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">AD</div>
+                <div class="flex-1 min-w-0">
+                    <p class="js-user-name text-xs font-semibold text-gray-800 truncate">—</p>
+                    <p class="js-user-role text-[11px] text-gray-400 truncate">—</p>
+                </div>
+                <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="h-14 bg-white border-b border-gray-200 px-6 flex items-center justify-end shrink-0">
+            <div class="flex items-center gap-4">
+                <button onclick="location.href='SanPham.html'" class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-4 py-1.5 rounded-lg flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-plus"></i> Tạo đơn nhanh
+                </button>
+                <div class="flex items-center gap-3 pl-4 border-l border-gray-200">
+                    <div class="text-right">
+                        <div class="js-user-name font-bold text-xs text-gray-800">—</div>
+                        <div class="js-user-role text-[11px] text-gray-400">—</div>
+                    </div>
+                    <div class="js-user-avatar w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">—</div>
+                    <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 space-y-5">
+
+            <!-- Tiêu đề -->
+            <div class="flex items-end justify-between gap-4 flex-wrap">
+                <div>
+                    <p class="text-[11px] text-gray-400">Báo cáo &amp; Thống kê › <span class="text-emerald-700 font-semibold">Trung tâm xuất báo cáo</span></p>
+                    <h1 class="text-2xl font-bold text-gray-900 mt-1">Trung tâm Xuất Báo cáo &amp; Phân tích <i class="fa-solid fa-chart-line text-emerald-600 text-lg"></i></h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Trích xuất số liệu doanh thu, phân tích hành vi khách hàng thân thiết và biến động kho hàng đa nhánh theo thời gian thực.</p>
+                </div>
+                <div class="flex items-center gap-2 no-print">
+                    <button id="btnPdf" class="border border-gray-300 bg-white hover:bg-gray-100 text-red-600 font-semibold px-4 py-2 rounded-lg text-xs flex items-center gap-2"><i class="fa-solid fa-file-pdf"></i> Xuất PDF</button>
+                    <button id="btnExcel" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-4 py-2 rounded-lg text-xs flex items-center gap-2"><i class="fa-solid fa-file-excel"></i> Xuất Excel (.xlsx)</button>
+                    <button onclick="window.print()" class="border border-gray-300 bg-white hover:bg-gray-100 text-gray-600 px-3 py-2 rounded-lg text-xs" title="In"><i class="fa-solid fa-print"></i></button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="bg-white border border-gray-200 rounded-xl p-1.5 grid grid-cols-3 gap-1 no-print">
+                <button data-tab="doanhthu" class="tab-btn active px-4 py-2 rounded-lg text-xs text-gray-600 flex items-center justify-center gap-2"><i class="fa-solid fa-chart-column"></i> Báo cáo Doanh thu &amp; Đơn hàng</button>
+                <button data-tab="khachhang" class="tab-btn px-4 py-2 rounded-lg text-xs text-gray-600 flex items-center justify-center gap-2"><i class="fa-solid fa-users"></i> Báo cáo Khách hàng &amp; CRM</button>
+                <button data-tab="tonkho" class="tab-btn px-4 py-2 rounded-lg text-xs text-gray-600 flex items-center justify-center gap-2"><i class="fa-solid fa-warehouse"></i> Báo cáo Tồn kho &amp; Nhập xuất</button>
+            </div>
+
+            <!-- Bộ lọc -->
+            <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm no-print">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-sliders text-emerald-700"></i> Tham số bộ lọc &amp; Kỳ báo cáo</h2>
+                    <button id="btnReset" class="text-xs text-gray-400 hover:text-emerald-700"><i class="fa-solid fa-rotate-left"></i> Mặc định</button>
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <label class="text-[11px] text-gray-500 font-semibold">Kỳ thời gian
+                        <select id="fPeriod" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-800 font-normal bg-white">
+                            <option value="7">7 ngày gần nhất</option>
+                            <option value="30">30 ngày gần nhất</option>
+                            <option value="month">Tháng này</option>
+                            <option value="custom">Tùy chọn</option>
+                        </select>
+                    </label>
+                    <label class="text-[11px] text-gray-500 font-semibold">Từ ngày <input type="date" id="fFrom" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-800 font-normal"></label>
+                    <label class="text-[11px] text-gray-500 font-semibold">Đến ngày <input type="date" id="fTo" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-800 font-normal"></label>
+                    <label class="text-[11px] text-gray-500 font-semibold">Nhân viên thu ngân
+                        <select id="fStaff" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-xs text-gray-800 font-normal bg-white"><option value="">Tất cả nhân viên</option></select>
+                    </label>
+                </div>
+                <div class="mt-3 flex items-center justify-between text-[11px]">
+                    <div class="flex items-center gap-2 text-gray-400">Đang áp dụng: <span id="chipPeriod" class="bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded"></span><span id="chipStaff" class="hidden bg-blue-50 text-blue-700 font-semibold px-2 py-0.5 rounded"></span></div>
+                    <span class="text-gray-400">Dữ liệu đồng bộ lúc: <span id="syncTime">—</span></span>
+                </div>
+            </div>
+
+            <!-- KPI (dùng chung cho các tab doanh thu) -->
+            <div id="kpiRow" class="grid grid-cols-4 gap-4"></div>
+
+            <!-- TAB 1 -->
+            <section data-pane="doanhthu" class="space-y-5">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="col-span-2 bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                        <h2 class="font-bold text-gray-900 text-base flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-700"></i> Biểu đồ xu hướng Doanh thu theo ngày</h2>
+                        <p class="text-[11px] text-gray-400" id="chartSub">—</p>
+                        <div class="h-64 mt-3"><canvas id="revChart"></canvas></div>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                        <h2 class="font-bold text-gray-900 text-base">Hiệu năng Voucher &amp; Giảm giá</h2>
+                        <p class="text-[11px] text-gray-400 mb-4">Tỷ trọng đơn dùng voucher và giá trị chiết khấu</p>
+                        <div id="voucherBox" class="space-y-4 text-xs"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                    <div class="p-5 pb-3">
+                        <h2 class="font-bold text-gray-900 text-base flex items-center gap-2"><i class="fa-solid fa-table text-emerald-700"></i> Bản xem trước số liệu kết xuất</h2>
+                        <p class="text-[11px] text-gray-400">Dữ liệu tổng hợp theo ngày — khớp với file Excel/PDF khi xuất.</p>
+                    </div>
+                    <table class="w-full text-xs">
+                        <thead class="bg-gray-50 text-[11px] text-gray-500 uppercase font-bold"><tr>
+                            <th class="text-left px-5 py-2.5">Ngày ghi nhận</th>
+                            <th class="text-right px-3 py-2.5">Số hóa đơn</th>
+                            <th class="text-right px-3 py-2.5">Doanh thu gộp</th>
+                            <th class="text-right px-3 py-2.5">Chiết khấu voucher</th>
+                            <th class="text-right px-3 py-2.5">Doanh thu thuần</th>
+                            <th class="text-right px-3 py-2.5">Điểm tích lũy cấp</th>
+                            <th class="text-center px-5 py-2.5">Trạng thái</th>
+                        </tr></thead>
+                        <tbody id="dayBody" class="divide-y divide-gray-100"></tbody>
+                        <tfoot id="dayFoot"></tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- TAB 2 -->
+            <section data-pane="khachhang" class="hidden space-y-5">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                        <h2 class="font-bold text-gray-900 text-base">Phân bố hạng thành viên</h2>
+                        <p class="text-[11px] text-gray-400">Toàn bộ khách hàng trong CRM</p>
+                        <div id="tierBox" class="mt-4 space-y-3 text-xs"></div>
+                    </div>
+                    <div class="col-span-2 bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                        <div class="p-5 pb-3">
+                            <h2 class="font-bold text-gray-900 text-base flex items-center gap-2"><i class="fa-solid fa-crown text-emerald-700"></i> Top khách hàng chi tiêu trong kỳ</h2>
+                            <p class="text-[11px] text-gray-400">Xếp theo tổng tiền thực trả</p>
+                        </div>
+                        <table class="w-full text-xs">
+                            <thead class="bg-gray-50 text-[11px] text-gray-500 uppercase font-bold"><tr>
+                                <th class="text-left px-5 py-2.5">Khách hàng</th><th class="text-left px-3 py-2.5">SĐT</th><th class="text-left px-3 py-2.5">Hạng</th>
+                                <th class="text-right px-3 py-2.5">Số đơn</th><th class="text-right px-3 py-2.5">Chi tiêu kỳ</th><th class="text-right px-5 py-2.5">Điểm hiện có</th>
+                            </tr></thead>
+                            <tbody id="custBody" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3 -->
+            <section data-pane="tonkho" class="hidden space-y-5">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                        <h2 class="font-bold text-gray-900 text-base">Tổng quan tồn kho</h2>
+                        <div id="stockSummary" class="mt-4 space-y-3 text-xs"></div>
+                    </div>
+                    <div class="col-span-2 bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                        <div class="p-5 pb-3">
+                            <h2 class="font-bold text-gray-900 text-base">Xuất – Nhập – Tồn theo sản phẩm</h2>
+                            <p class="text-[11px] text-gray-400">Xuất = bán ra trong kỳ, Nhập = theo phiếu nhập trong kỳ, Tồn = hiện tại</p>
+                        </div>
+                        <table class="w-full text-xs">
+                            <thead class="bg-gray-50 text-[11px] text-gray-500 uppercase font-bold"><tr>
+                                <th class="text-left px-5 py-2.5">Sản phẩm</th><th class="text-right px-3 py-2.5">Nhập kỳ</th><th class="text-right px-3 py-2.5">Xuất kỳ</th>
+                                <th class="text-right px-3 py-2.5">Tồn hiện tại</th><th class="text-right px-5 py-2.5">Giá trị tồn</th>
+                            </tr></thead>
+                            <tbody id="stockBody" class="divide-y divide-gray-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Định dạng xuất -->
+            <div class="grid grid-cols-2 gap-4 no-print">
+                <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                    <span class="w-9 h-9 rounded-lg bg-red-50 text-red-600 flex items-center justify-center"><i class="fa-solid fa-file-pdf"></i></span>
+                    <h3 class="font-bold text-gray-900 mt-3">Định dạng PDF tiêu chuẩn</h3>
+                    <p class="text-[11px] text-gray-400 mt-1">Bố cục in sẵn, ẩn thanh điều hướng, phù hợp trình ký và lưu trữ.</p>
+                    <button onclick="window.print()" class="mt-3 text-xs font-semibold text-red-600 hover:underline">Xuất bản PDF ngay <i class="fa-solid fa-download"></i></button>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                    <span class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-table"></i></span>
+                    <h3 class="font-bold text-gray-900 mt-3">Bảng tính Excel (.xlsx)</h3>
+                    <p class="text-[11px] text-gray-400 mt-1">Gồm 3 sheet: doanh thu theo ngày, chi tiết hóa đơn, xuất–nhập–tồn.</p>
+                    <button id="btnExcel2" class="mt-3 text-xs font-semibold text-emerald-700 hover:underline">Xuất bản Excel ngay <i class="fa-solid fa-download"></i></button>
+                </div>
+            </div>
+            <p class="text-[11px] text-gray-400 no-print">* Hệ thống hiện chưa lưu giá vốn và chi nhánh nên báo cáo không có cột lợi nhuận gộp / lọc chi nhánh.</p>
+        </main>
+    </div>
+
+    <script>
+        window.API_BASE_ROOT = window.API_BASE_ROOT || 'http://localhost:8080';
+        var API = { hd: `${window.API_BASE_ROOT}/api/hoadon`, sp: `${window.API_BASE_ROOT}/api/sanpham`, kh: `${window.API_BASE_ROOT}/api/khachhang`, pn: `${window.API_BASE_ROOT}/api/phieunhap` };
+    </script>
+    <script src="common.js"></script>
+    <script>
+        const POINT_VND = 50000;      // 50.000đ = 1 điểm (khớp HoaDonController)
+        const LOW_STOCK = 20;
+        const DETAIL_CAP = 400;       // tối đa số hóa đơn tải chi tiết
+        let invoices = [], products = [], customers = [], imports = [];
+        let details = {};              // maHd -> chi tiết
+        let view = { rows: [], days: [], filtered: [] };
+        let chart = null, activeTab = 'doanhthu';
+
+        const money = n => Math.round(Number(n) || 0).toLocaleString('vi-VN');
+        const short = n => { n = Number(n) || 0; return n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e3 ? Math.round(n / 1e3) + 'K' : String(Math.round(n)); };
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const pad = n => String(n).padStart(2, '0');
+        const dayStr = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        const vnDay = s => { const [y, m, d] = s.split('-'); return `${d}/${m}/${y}`; };
+        const dow = s => ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'][new Date(s + 'T00:00:00').getDay()];
+        const invDay = h => h.ngayDat ? dayStr(new Date(h.ngayDat)) : '';
+        const $ = id => document.getElementById(id);
+
+        async function getJson(url) {
+            try { const r = await fetch(url); if (!r.ok) throw new Error(r.status); const d = await r.json(); return Array.isArray(d) ? d : []; }
+            catch (e) { console.error('Lỗi tải', url, e); return []; }
+        }
+
+        async function loadAll() {
+            [invoices, products, customers, imports] = await Promise.all([getJson(API.hd), getJson(API.sp), getJson(API.kh), getJson(API.pn)]);
+            const staff = [...new Set(invoices.map(h => h.tenNhanVien).filter(Boolean))].sort();
+            const cur = $('fStaff').value;
+            $('fStaff').innerHTML = '<option value="">Tất cả nhân viên</option>' + staff.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
+            $('fStaff').value = staff.includes(cur) ? cur : '';
+            $('syncTime').textContent = new Date().toLocaleString('vi-VN');
+            await apply();
+        }
+
+        function setPeriod() {
+            const p = $('fPeriod').value, today = new Date();
+            if (p === 'custom') return;
+            let from = new Date(today);
+            if (p === 'month') from = new Date(today.getFullYear(), today.getMonth(), 1);
+            else from.setDate(from.getDate() - (Number(p) - 1));
+            $('fFrom').value = dayStr(from); $('fTo').value = dayStr(today);
+        }
+
+        async function apply() {
+            const from = $('fFrom').value, to = $('fTo').value, staff = $('fStaff').value;
+            if (from > to) { alert('"Từ ngày" phải nhỏ hơn hoặc bằng "Đến ngày"'); return; }
+            $('chipPeriod').textContent = `${vnDay(from)} → ${vnDay(to)}`;
+            $('chipStaff').textContent = staff; $('chipStaff').classList.toggle('hidden', !staff);
+
+            const filtered = invoices.filter(h => { const d = invDay(h); return d >= from && d <= to && (!staff || h.tenNhanVien === staff); });
+            // tải chi tiết hóa đơn còn thiếu
+            const need = filtered.filter(h => !details[h.maHd]).slice(0, DETAIL_CAP);
+            await Promise.all(need.map(h => fetch(`${API.hd}/${encodeURIComponent(h.maHd)}`).then(r => r.ok ? r.json() : null).then(d => { if (d) details[h.maHd] = d; }).catch(() => {})));
+
+            // gom theo ngày (liệt kê đủ mọi ngày trong kỳ)
+            const map = {};
+            for (let d = new Date(from + 'T00:00:00'); dayStr(d) <= to; d.setDate(d.getDate() + 1)) map[dayStr(d)] = { day: dayStr(d), orders: 0, gross: 0, disc: 0, net: 0, points: 0 };
+            filtered.forEach(h => {
+                const m = map[invDay(h)]; if (!m) return;
+                const net = Number(h.tongTien) || 0;
+                const dt = details[h.maHd];
+                const gross = dt ? Number(dt.tongTienGoc) : net;
+                m.orders++; m.net += net; m.gross += gross; m.disc += gross - net;
+                if (h.khachHangSdt) m.points += Math.floor(net / POINT_VND);
+            });
+            view = { filtered, days: Object.values(map), from, to };
+            render();
+        }
+
+        function render() {
+            const { filtered, days } = view;
+            const net = days.reduce((s, d) => s + d.net, 0), orders = filtered.length;
+            const points = days.reduce((s, d) => s + d.points, 0);
+            const used = filtered.filter(h => h.maVoucher).length;
+            const members = new Set(filtered.map(h => h.khachHangSdt).filter(Boolean)).size;
+            const kpi = (label, val, unit, sub, icon, tone) => `
+                <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                    <div class="flex justify-between items-start"><span class="text-[11px] font-semibold text-gray-500 uppercase">${label}</span>
+                    <span class="w-8 h-8 rounded-lg ${tone} flex items-center justify-center"><i class="fa-solid ${icon}"></i></span></div>
+                    <div class="mt-2 text-2xl font-black text-gray-900">${val} <span class="text-sm font-semibold text-gray-500">${unit}</span></div>
+                    <div class="mt-1 text-[11px] text-gray-400">${sub}</div></div>`;
+            $('kpiRow').innerHTML =
+                kpi('Tổng doanh thu thuần', money(net), 'đ', `${days.length} ngày trong kỳ`, 'fa-money-bill-wave', 'bg-emerald-50 text-emerald-700') +
+                kpi('Tổng số hóa đơn', orders.toLocaleString('vi-VN'), 'đơn', `AOV: ${money(orders ? net / orders : 0)} đ / đơn`, 'fa-receipt', 'bg-blue-50 text-blue-600') +
+                kpi('Điểm thưởng đã cấp', money(points), 'pts', `${members} khách thành viên mua hàng`, 'fa-tags', 'bg-purple-50 text-purple-600') +
+                kpi('Đơn dùng voucher', used.toLocaleString('vi-VN'), 'đơn', orders ? `${(used / orders * 100).toFixed(1)}% tổng số đơn` : '—', 'fa-ticket', 'bg-red-50 text-red-500');
+
+            renderChart(); renderDayTable(); renderVoucher(); renderCustomers(); renderStock();
+        }
+
+        function renderChart() {
+            const d = view.days;
+            $('chartSub').textContent = `Chu kỳ ${d.length} ngày (${vnDay(view.from)} – ${vnDay(view.to)}) · đơn vị: đồng`;
+            if (chart) chart.destroy();
+            chart = new Chart($('revChart'), {
+                type: 'line',
+                data: { labels: d.map(x => x.day.slice(8) + '/' + x.day.slice(5, 7)), datasets: [{ label: 'Doanh thu thuần', data: d.map(x => x.net), borderColor: '#047857', backgroundColor: 'rgba(4,120,87,.12)', fill: true, tension: .35, borderWidth: 2.5, pointRadius: d.length > 31 ? 0 : 3, pointBackgroundColor: '#047857' }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${money(c.parsed.y)} đ` } } },
+                    scales: { x: { grid: { display: false }, ticks: { font: { size: 10 }, maxTicksLimit: 15 } }, y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 }, callback: v => short(v) } } } }
+            });
+        }
+
+        function renderDayTable() {
+            const rows = view.days.slice().reverse();
+            const today = dayStr(new Date());
+            $('dayBody').innerHTML = rows.map(d => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-5 py-2.5 font-semibold text-gray-800">${vnDay(d.day)} <span class="text-[10px] text-gray-400 font-normal">(${d.day === today ? 'Hôm nay' : dow(d.day)})</span></td>
+                    <td class="px-3 py-2.5 text-right">${d.orders}</td>
+                    <td class="px-3 py-2.5 text-right">${money(d.gross)} đ</td>
+                    <td class="px-3 py-2.5 text-right ${d.disc > 0 ? 'text-red-500' : 'text-gray-400'}">${d.disc > 0 ? '-' + money(d.disc) : '0'} đ</td>
+                    <td class="px-3 py-2.5 text-right font-bold text-emerald-700">${money(d.net)} đ</td>
+                    <td class="px-3 py-2.5 text-right">${d.points}</td>
+                    <td class="px-5 py-2.5 text-center"><span class="${d.orders ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-400'} text-[10px] font-bold px-2 py-1 rounded-md">${d.orders ? 'Đã khóa sổ' : 'Không có đơn'}</span></td>
+                </tr>`).join('');
+            const t = k => view.days.reduce((s, d) => s + d[k], 0);
+            $('dayFoot').innerHTML = `<tr class="bg-emerald-50 font-bold text-gray-900">
+                <td class="px-5 py-3">Tổng cộng ${view.days.length} ngày</td><td class="px-3 py-3 text-right">${t('orders')}</td>
+                <td class="px-3 py-3 text-right">${money(t('gross'))} đ</td><td class="px-3 py-3 text-right text-red-500">-${money(t('disc'))} đ</td>
+                <td class="px-3 py-3 text-right text-emerald-700">${money(t('net'))} đ</td><td class="px-3 py-3 text-right">${t('points')}</td><td></td></tr>`;
+        }
+
+        function renderVoucher() {
+            const f = view.filtered, used = f.filter(h => h.maVoucher);
+            const disc = view.days.reduce((s, d) => s + d.disc, 0);
+            const net = view.days.reduce((s, d) => s + d.net, 0);
+            const netVoucher = used.reduce((s, h) => s + (Number(h.tongTien) || 0), 0);
+            const bar = (label, val, pct, color) => `<div><div class="flex justify-between"><span class="text-gray-500">${label}</span><b class="text-gray-900">${val}</b></div><div class="h-2 bg-gray-100 rounded-full mt-1"><div class="h-2 rounded-full ${color}" style="width:${Math.min(100, pct).toFixed(1)}%"></div></div></div>`;
+            $('voucherBox').innerHTML =
+                bar('Đơn có dùng voucher', `${used.length}/${f.length} đơn`, f.length ? used.length / f.length * 100 : 0, 'bg-emerald-600') +
+                bar('Đơn thành viên (có SĐT)', `${f.filter(h => h.khachHangSdt).length}/${f.length} đơn`, f.length ? f.filter(h => h.khachHangSdt).length / f.length * 100 : 0, 'bg-blue-500') +
+                bar('Doanh thu từ đơn voucher', `${money(netVoucher)} đ`, net ? netVoucher / net * 100 : 0, 'bg-amber-400') +
+                `<div class="rounded-lg bg-gray-50 border border-gray-100 p-3"><p class="text-gray-500">Tổng chiết khấu voucher đã áp dụng</p><p class="text-lg font-black text-red-500">${money(disc)} đ</p></div>`;
+        }
+
+        function renderCustomers() {
+            const tiers = ['Vàng', 'Bạc', 'Đồng', 'Chưa xếp hạng'], col = { 'Vàng': 'bg-amber-400', 'Bạc': 'bg-gray-400', 'Đồng': 'bg-orange-400', 'Chưa xếp hạng': 'bg-gray-200' };
+            $('tierBox').innerHTML = tiers.map(t => {
+                const n = customers.filter(c => c.hang === t).length, p = customers.length ? n / customers.length * 100 : 0;
+                return `<div><div class="flex justify-between"><span class="text-gray-600">${t}</span><b>${n} <span class="text-gray-400 font-normal">(${p.toFixed(0)}%)</span></b></div><div class="h-2 bg-gray-100 rounded-full mt-1"><div class="h-2 rounded-full ${col[t]}" style="width:${p}%"></div></div></div>`;
+            }).join('') + `<p class="pt-2 text-[11px] text-gray-400">Tổng ${customers.length} khách hàng thành viên</p>`;
+
+            const agg = {};
+            view.filtered.forEach(h => { if (!h.khachHangSdt) return; const a = agg[h.khachHangSdt] ||= { sdt: h.khachHangSdt, ten: h.khachHangTen, n: 0, spent: 0 }; a.n++; a.spent += Number(h.tongTien) || 0; });
+            const top = Object.values(agg).sort((a, b) => b.spent - a.spent).slice(0, 10);
+            $('custBody').innerHTML = top.length ? top.map(a => {
+                const c = customers.find(x => x.sdt === a.sdt) || {};
+                return `<tr class="hover:bg-gray-50 cursor-pointer" onclick="location.href='ChiTietKH.html?sdt=${encodeURIComponent(a.sdt)}'">
+                    <td class="px-5 py-2.5 font-semibold text-gray-800">${esc(a.ten)}</td><td class="px-3 py-2.5 font-mono text-gray-500">${esc(a.sdt)}</td>
+                    <td class="px-3 py-2.5"><span class="bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded">${esc(c.hang || '—')}</span></td>
+                    <td class="px-3 py-2.5 text-right">${a.n}</td><td class="px-3 py-2.5 text-right font-bold text-emerald-700">${money(a.spent)} đ</td><td class="px-5 py-2.5 text-right">${money(c.diem)}</td></tr>`;
+            }).join('') : '<tr><td colspan="6" class="text-center text-gray-400 py-8">Không có khách hàng thành viên mua hàng trong kỳ</td></tr>';
+        }
+
+        function stockRows() {
+            const { from, to, filtered } = view;
+            const out = {}, inn = {};
+            filtered.forEach(h => (details[h.maHd]?.items || []).forEach(it => out[it.maSp] = (out[it.maSp] || 0) + it.soLuong));
+            // phiếu nhập chỉ có chi tiết ở /api/phieunhap/{ma}; dùng cache details của phiếu nhập
+            imports.filter(p => { const d = p.ngayNhap ? dayStr(new Date(p.ngayNhap)) : ''; return d >= from && d <= to; })
+                   .forEach(p => (impDetails[p.maPn]?.items || []).forEach(it => inn[it.maSp] = (inn[it.maSp] || 0) + it.soLuong));
+            return products.map(p => ({ ma: p.maSp, ten: p.tenSp, nhap: inn[p.maSp] || 0, xuat: out[p.maSp] || 0, ton: p.soLuong ?? 0, gia: Number(p.donGia) || 0 }))
+                           .sort((a, b) => (b.xuat + b.nhap) - (a.xuat + a.nhap) || a.ton - b.ton);
+        }
+
+        const impDetails = {};
+        async function loadImportDetails() {
+            const { from, to } = view;
+            const need = imports.filter(p => { const d = p.ngayNhap ? dayStr(new Date(p.ngayNhap)) : ''; return d >= from && d <= to && !impDetails[p.maPn]; });
+            await Promise.all(need.map(p => fetch(`${API.pn}/${encodeURIComponent(p.maPn)}`).then(r => r.ok ? r.json() : null).then(d => { if (d) impDetails[p.maPn] = d; }).catch(() => {})));
+        }
+
+        async function renderStock() {
+            await loadImportDetails();
+            const rows = stockRows();
+            const value = rows.reduce((s, r) => s + r.ton * r.gia, 0);
+            const low = rows.filter(r => r.ton <= LOW_STOCK);
+            $('stockSummary').innerHTML = `
+                <div class="flex justify-between"><span class="text-gray-500">Số mã sản phẩm (SKU)</span><b>${rows.length}</b></div>
+                <div class="flex justify-between"><span class="text-gray-500">Giá trị tồn (theo giá bán)</span><b class="text-emerald-700">${money(value)} đ</b></div>
+                <div class="flex justify-between"><span class="text-gray-500">SKU sắp hết (≤ ${LOW_STOCK})</span><b class="text-red-500">${low.length}</b></div>
+                <div class="flex justify-between"><span class="text-gray-500">Phiếu nhập trong kỳ</span><b>${Object.keys(impDetails).filter(k => { const p = imports.find(x => x.maPn === k); const d = p && p.ngayNhap ? dayStr(new Date(p.ngayNhap)) : ''; return d >= view.from && d <= view.to; }).length}</b></div>
+                <div class="flex justify-between"><span class="text-gray-500">Tổng SL xuất / nhập kỳ</span><b>${rows.reduce((s, r) => s + r.xuat, 0)} / ${rows.reduce((s, r) => s + r.nhap, 0)}</b></div>`;
+            $('stockBody').innerHTML = rows.slice(0, 15).map(r => `
+                <tr class="hover:bg-gray-50"><td class="px-5 py-2.5"><div class="font-semibold text-gray-800">${esc(r.ten)}</div><div class="text-[10px] text-gray-400 font-mono">${esc(r.ma)}</div></td>
+                <td class="px-3 py-2.5 text-right text-blue-600">${r.nhap}</td><td class="px-3 py-2.5 text-right text-amber-600">${r.xuat}</td>
+                <td class="px-3 py-2.5 text-right font-bold ${r.ton <= LOW_STOCK ? 'text-red-500' : 'text-gray-900'}">${r.ton}</td>
+                <td class="px-5 py-2.5 text-right">${money(r.ton * r.gia)} đ</td></tr>`).join('') || '<tr><td colspan="5" class="text-center text-gray-400 py-8">Chưa có sản phẩm</td></tr>';
+        }
+
+        function exportExcel() {
+            const wb = XLSX.utils.book_new();
+            const s1 = [['Ngày', 'Số hóa đơn', 'Doanh thu gộp', 'Chiết khấu voucher', 'Doanh thu thuần', 'Điểm tích lũy cấp']]
+                .concat(view.days.map(d => [vnDay(d.day), d.orders, d.gross, d.disc, d.net, d.points]));
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(s1), 'Doanh thu theo ngày');
+            const s2 = [['Mã HD', 'Thời gian', 'Khách hàng', 'SĐT', 'Nhân viên', 'Mã voucher', 'Tổng tiền']]
+                .concat(view.filtered.map(h => [h.maHd, new Date(h.ngayDat).toLocaleString('vi-VN'), h.khachHangTen || 'Khách lẻ', h.khachHangSdt || '', h.tenNhanVien || '', h.maVoucher || '', Number(h.tongTien) || 0]));
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(s2), 'Chi tiết hóa đơn');
+            const s3 = [['Mã SP', 'Tên SP', 'Nhập kỳ', 'Xuất kỳ', 'Tồn hiện tại', 'Giá trị tồn']].concat(stockRows().map(r => [r.ma, r.ten, r.nhap, r.xuat, r.ton, r.ton * r.gia]));
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(s3), 'Xuất - Nhập - Tồn');
+            XLSX.writeFile(wb, `bao-cao_${view.from}_${view.to}.xlsx`);
+        }
+
+        function switchTab(t) {
+            activeTab = t;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
+            document.querySelectorAll('[data-pane]').forEach(p => p.classList.toggle('hidden', p.dataset.pane !== t));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setPeriod();
+            document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+            $('fPeriod').addEventListener('change', () => { setPeriod(); apply(); });
+            ['fFrom', 'fTo'].forEach(id => $(id).addEventListener('change', () => { $('fPeriod').value = 'custom'; apply(); }));
+            $('fStaff').addEventListener('change', apply);
+            $('btnReset').addEventListener('click', () => { $('fPeriod').value = '7'; $('fStaff').value = ''; setPeriod(); apply(); });
+            $('btnExcel').addEventListener('click', exportExcel);
+            $('btnExcel2').addEventListener('click', exportExcel);
+            $('btnPdf').addEventListener('click', () => window.print());
+            loadAll();
+        });
+    </script>
+</body>
+</html>

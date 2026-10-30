@@ -9,7 +9,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class NhaCungCap {
 
     // Lưu mã không dấu (ASCII) để không bị hỏng khi cột SQL Server là varchar
@@ -20,7 +19,7 @@ public class NhaCungCap {
     @Column(name = "ma_ncc", length = 20, nullable = false)
     private String maNcc;
 
-    @Column(name = "ten_ncc", length = 200, nullable = false)
+    @Column(name = "ten_ncc", length = 200, nullable = false, columnDefinition = "NVARCHAR(255)")
     private String tenNcc;
 
     @Column(name = "nguoi_lien_he", length = 100)

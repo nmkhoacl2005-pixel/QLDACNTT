@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINIMART.CRM - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body data-page="dashboard" class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 text-sm">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between shrink-0">
+        <div class="overflow-y-auto p-4">
+            <div class="flex items-center gap-2 mb-6">
+                <div class="bg-emerald-600 text-white p-2 rounded-lg text-lg flex items-center justify-center w-8 h-8">
+                    <i class="fa-solid fa-shop"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base text-gray-900 leading-none">MINIMART<span class="text-emerald-600">.CRM</span></h1>
+                    <span class="text-[10px] text-gray-400 font-medium">HỆ THỐNG SIÊU THỊ MINI</span>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Nhóm chung</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="Dashboard.html" data-key="dashboard" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-table-cells-large w-4"></i> Dashboard</a></li>
+                        <li><a href="quanlynhansu.html" data-key="nhansu" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users-gear w-4"></i> Quản lý Nhân sự</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Thu ngân / POS</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="SanPham.html" data-key="pos" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-cash-register w-4"></i> Bán hàng tại quầy</a></li>
+                        <li><a href="DanhSachHD.html" data-key="dshoadon" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-list-ul w-4"></i> Danh sách hóa đơn</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản trị & CRM</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhSachKH.html" data-key="khachhang" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-users w-4"></i> Khách hàng & Thành viên</a></li>
+                        <li><a href="BaoCao.html" data-key="baocao" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-chart-line w-4"></i> Báo cáo & Thống kê</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Quản lý kho</span>
+                    <ul class="mt-2 space-y-1">
+                        <li><a href="DanhMucSP.html" data-key="danhmuc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-box-archive w-4"></i> Danh mục Sản phẩm</a></li>
+                        <li><a href="NhaCungCap.html" data-key="ncc" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-truck-field w-4"></i> Nhà cung cấp</a></li>
+                        <li><a href="PhieuNhap.html" data-key="phieunhap" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg"><i class="fa-solid fa-file-import w-4"></i> Phiếu nhập hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-2.5 p-2 rounded-xl bg-gray-50 border border-gray-100">
+                <div class="js-user-avatar w-9 h-9 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">AD</div>
+                <div class="flex-1 min-w-0">
+                    <p class="js-user-name text-xs font-semibold text-gray-800 truncate">—</p>
+                    <p class="js-user-role text-[11px] text-gray-400 truncate">—</p>
+                </div>
+                <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="h-14 bg-white border-b border-gray-200 px-6 flex items-center justify-end shrink-0">
+            <div class="flex items-center gap-4">
+                <button onclick="location.href='SanPham.html'" class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-4 py-1.5 rounded-lg flex items-center gap-2 text-sm">
+                    <i class="fa-solid fa-plus"></i> Tạo đơn nhanh
+                </button>
+                <div class="flex items-center gap-3 pl-4 border-l border-gray-200">
+                    <div class="text-right">
+                        <div class="js-user-name font-bold text-xs text-gray-800">—</div>
+                        <div class="js-user-role text-[11px] text-gray-400">—</div>
+                    </div>
+                    <div class="js-user-avatar w-8 h-8 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">—</div>
+                    <button class="js-logout-btn text-gray-400 hover:text-red-600" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 space-y-5">
+
+            <!-- Tiêu đề -->
+            <div class="flex items-end justify-between gap-4 flex-wrap">
+                <div>
+                    <span class="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 text-[11px] font-semibold px-2.5 py-0.5 rounded-md">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Store Manager &amp; Admin View
+                    </span>
+                    <h1 class="text-2xl font-bold text-gray-900 mt-2">Tổng quan Hoạt động Cửa hàng</h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Cập nhật tức thời từ hóa đơn POS, doanh thu và tồn kho.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label class="flex items-center gap-2 border border-gray-300 bg-white rounded-lg px-3 py-1.5 text-xs font-medium text-gray-700">
+                        <i class="fa-regular fa-calendar"></i>
+                        <input type="date" id="dayPicker" class="outline-none bg-transparent text-xs">
+                    </label>
+                    <button id="btnSync" class="border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 font-medium px-3 py-1.5 rounded-lg text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i> Đồng bộ
+                    </button>
+                    <button id="btnExport" class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium px-3 py-1.5 rounded-lg text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> Xuất báo cáo
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI -->
+            <div class="grid grid-cols-3 gap-4">
+                <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs text-gray-500">Doanh thu thuần</span>
+                        <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-money-bill-wave"></i></span>
+                    </div>
+                    <div class="mt-2 text-3xl font-black text-emerald-800"><span id="kpiRevenue">0</span> <span class="text-base font-semibold">đ</span></div>
+                    <div class="mt-2 flex items-center gap-2 text-[11px]">
+                        <span id="kpiRevenueDelta" class="px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-semibold">—</span>
+                        <span class="text-gray-400">so với hôm trước</span>
+                    </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs text-gray-500">Tổng lượt đơn hàng</span>
+                        <span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-cart-shopping"></i></span>
+                    </div>
+                    <div class="mt-2 text-3xl font-black text-gray-900"><span id="kpiOrders">0</span> <span class="text-base font-semibold text-gray-500">đơn</span></div>
+                    <div class="mt-2 flex items-center gap-2 text-[11px]">
+                        <span id="kpiOrdersDelta" class="px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-semibold">—</span>
+                        <span class="text-gray-400">tốc độ giao dịch</span>
+                    </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs text-gray-500">Khách hàng thành viên (CRM)</span>
+                        <span class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center"><i class="fa-solid fa-user-plus"></i></span>
+                    </div>
+                    <div class="mt-2 text-3xl font-black text-gray-900"><span id="kpiCustomers">0</span> <span class="text-base font-semibold text-gray-500">thành viên</span></div>
+                    <div class="mt-2 text-[11px] text-gray-400"><span id="kpiCustomersToday" class="font-semibold text-purple-600">0</span> thành viên mua hàng trong ngày</div>
+                </div>
+            </div>
+
+            <!-- Biểu đồ + Cảnh báo kho -->
+            <div class="grid grid-cols-3 gap-4">
+                <div class="col-span-2 bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h2 class="font-bold text-gray-900 text-base">Doanh thu &amp; Lưu lượng theo Giờ</h2>
+                            <p class="text-xs text-gray-400">Phân tích nhịp thanh toán cao điểm tại các quầy thu ngân</p>
+                        </div>
+                        <div class="flex items-center gap-4 text-[11px] text-gray-500 whitespace-nowrap">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-700"></span>Ngày chọn</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-gray-300"></span>Hôm trước</span>
+                            <span id="peakLabel" class="bg-gray-100 rounded px-2 py-1 whitespace-nowrap">Đỉnh: —</span>
+                        </div>
+                    </div>
+                    <div class="h-72 mt-3"><canvas id="hourChart"></canvas></div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm flex flex-col">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-triangle-exclamation"></i></span>
+                            <div>
+                                <h2 class="font-bold text-gray-900 text-base leading-tight">Cảnh báo Tồn kho</h2>
+                                <p class="text-[11px] text-gray-400">Sản phẩm sắp hết hàng cần nhập thêm</p>
+                            </div>
+                        </div>
+                        <span id="stockCount" class="bg-red-100 text-red-600 text-[11px] font-bold px-2 py-0.5 rounded-full">0 SKUs</span>
+                    </div>
+                    <div id="stockList" class="mt-4 space-y-4 flex-1"></div>
+                    <button onclick="location.href='PhieuNhap.html'" class="mt-4 w-full bg-emerald-700 hover:bg-emerald-800 text-white font-medium py-2 rounded-lg text-xs flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-import"></i> Tạo phiếu nhập nhanh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sản phẩm bán chạy -->
+            <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h2 class="font-bold text-gray-900 text-base flex items-center gap-2"><i class="fa-solid fa-fire text-emerald-700"></i> Sản phẩm bán chạy</h2>
+                        <p class="text-xs text-gray-400">Top mặt hàng theo doanh thu trong ngày đã chọn</p>
+                    </div>
+                    <span class="text-[11px] text-gray-400">Đóng góp doanh số trong ngày</span>
+                </div>
+                <div id="topProducts" class="grid grid-cols-4 gap-3 mt-4"></div>
+            </div>
+
+            <!-- Giao dịch gần nhất + VIP -->
+            <div class="grid grid-cols-3 gap-4">
+                <div class="col-span-2 bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                    <div class="flex items-start justify-between p-5 pb-3">
+                        <div>
+                            <h2 class="font-bold text-gray-900 text-base">Giao dịch Gần nhất</h2>
+                            <p class="text-xs text-gray-400">Thời gian thực các đơn hàng vừa thanh toán tại chi nhánh</p>
+                        </div>
+                        <a href="DanhSachHD.html" class="text-xs text-emerald-700 font-semibold hover:underline">Xem tất cả hóa đơn →</a>
+                    </div>
+                    <table class="w-full text-xs">
+                        <thead class="bg-gray-50 text-[11px] text-gray-500 uppercase font-bold">
+                            <tr>
+                                <th class="text-left px-5 py-2.5">Mã đơn</th>
+                                <th class="text-left px-3 py-2.5">Thời gian</th>
+                                <th class="text-left px-3 py-2.5">Khách hàng / SĐT</th>
+                                <th class="text-left px-3 py-2.5">Nhân viên</th>
+                                <th class="text-right px-3 py-2.5">Tổng tiền</th>
+                                <th class="text-center px-5 py-2.5">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentBody" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                    <div id="recentEmpty" class="hidden text-center text-xs text-gray-400 p-8">Chưa có giao dịch nào trong ngày đã chọn</div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm flex flex-col">
+                    <div class="flex items-center justify-between">
+                        <h2 class="font-bold text-gray-900 text-base flex items-center gap-2"><i class="fa-solid fa-crown text-emerald-700"></i> Khách hàng VIP</h2>
+                        <span id="vipRank" class="bg-purple-100 text-purple-700 text-[11px] font-semibold px-2 py-0.5 rounded-md">—</span>
+                    </div>
+                    <div id="vipBox" class="mt-4 flex-1"></div>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <button id="btnVipCrm" class="border border-gray-300 hover:bg-gray-100 text-gray-700 font-medium py-2 rounded-lg text-xs">Tra cứu CRM</button>
+                        <button id="btnVipVoucher" class="bg-emerald-700 hover:bg-emerald-800 text-white font-medium py-2 rounded-lg text-xs">Tặng Voucher</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        window.API_BASE_ROOT = window.API_BASE_ROOT || 'http://localhost:8080';
+        var API_HOADON = `${window.API_BASE_ROOT}/api/hoadon`;
+        var API_SANPHAM = `${window.API_BASE_ROOT}/api/sanpham`;
+        var API_KHACHHANG = `${window.API_BASE_ROOT}/api/khachhang`;
+    </script>
+    <script src="common.js"></script>
+    <script>
+        const LOW_STOCK_LIMIT = 20;   // tồn <= ngưỡng này thì cảnh báo
+        const HOURS = Array.from({ length: 16 }, (_, i) => i + 7); // 7h – 22h
+        let invoices = [], products = [], customers = [], chart = null, vipCustomer = null;
+
+        const money = n => Math.round(Number(n) || 0).toLocaleString('vi-VN');
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const dayStr = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        const invDate = hd => hd.ngayDat ? new Date(hd.ngayDat) : null;
+        const invDay = hd => { const d = invDate(hd); return d ? dayStr(d) : ''; };
+        const prevDay = s => { const d = new Date(s + 'T00:00:00'); d.setDate(d.getDate() - 1); return dayStr(d); };
+
+        async function getJson(url) {
+            try {
+                const r = await fetch(url);
+                if (!r.ok) throw new Error(r.status);
+                const data = await r.json();
+                return Array.isArray(data) ? data : [];
+            } catch (e) { console.error('Lỗi tải', url, e); return []; }
+        }
+
+        async function loadAll() {
+            [invoices, products, customers] = await Promise.all([getJson(API_HOADON), getJson(API_SANPHAM), getJson(API_KHACHHANG)]);
+            render();
+        }
+
+        function delta(cur, prev) {
+            if (!prev) return cur ? { text: 'Mới', cls: 'bg-emerald-100 text-emerald-700' } : { text: '—', cls: 'bg-gray-100 text-gray-500' };
+            const p = (cur - prev) / prev * 100;
+            const up = p >= 0;
+            return { text: `${up ? '↗ +' : '↘ '}${p.toFixed(1)}%`, cls: up ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-600' };
+        }
+
+        function setDelta(id, d) {
+            const el = document.getElementById(id);
+            el.textContent = d.text;
+            el.className = `px-1.5 py-0.5 rounded font-semibold ${d.cls}`;
+        }
+
+        function render() {
+            const day = document.getElementById('dayPicker').value;
+            const today = invoices.filter(h => invDay(h) === day);
+            const yest = invoices.filter(h => invDay(h) === prevDay(day));
+            const sum = list => list.reduce((s, h) => s + (Number(h.tongTien) || 0), 0);
+
+            document.getElementById('kpiRevenue').textContent = money(sum(today));
+            document.getElementById('kpiOrders').textContent = today.length.toLocaleString('vi-VN');
+            setDelta('kpiRevenueDelta', delta(sum(today), sum(yest)));
+            setDelta('kpiOrdersDelta', delta(today.length, yest.length));
+            document.getElementById('kpiCustomers').textContent = customers.length.toLocaleString('vi-VN');
+            document.getElementById('kpiCustomersToday').textContent = new Set(today.map(h => h.khachHangSdt).filter(Boolean)).size;
+
+            renderChart(today, yest);
+            renderStock();
+            renderRecent(today);
+            renderTop(today);
+            renderVip();
+        }
+
+        function hourly(list) {
+            const arr = HOURS.map(() => 0);
+            list.forEach(h => {
+                const d = invDate(h); if (!d) return;
+                const i = HOURS.indexOf(d.getHours());
+                if (i >= 0) arr[i] += Number(h.tongTien) || 0;
+            });
+            return arr;
+        }
+
+        function renderChart(today, yest) {
+            const a = hourly(today), b = hourly(yest);
+            const max = Math.max(...a);
+            const peakIdx = max > 0 ? a.indexOf(max) : -1;
+            document.getElementById('peakLabel').textContent = peakIdx >= 0 ? `Đỉnh: ${HOURS[peakIdx]}:00 – ${HOURS[peakIdx] + 1}:00` : 'Đỉnh: —';
+
+            const labels = HOURS.map(h => `${String(h).padStart(2, '0')}h`);
+            if (chart) chart.destroy();
+            chart = new Chart(document.getElementById('hourChart'), {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'Ngày chọn', data: a, borderColor: '#047857', backgroundColor: 'rgba(4,120,87,.12)', fill: true, tension: .4, borderWidth: 2.5,
+                          pointRadius: a.map((_, i) => i === peakIdx ? 5 : 0), pointBackgroundColor: '#047857' },
+                        { label: 'Hôm trước', data: b, borderColor: '#cbd5e1', borderDash: [5, 5], tension: .4, borderWidth: 2, pointRadius: 0, fill: false }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${money(c.parsed.y)} đ` } } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 }, callback: v => v >= 1e6 ? (v / 1e6) + 'M' : v >= 1e3 ? (v / 1e3) + 'K' : v } }
+                    }
+                }
+            });
+        }
+
+        function renderStock() {
+            const low = products.filter(p => (p.soLuong ?? 0) <= LOW_STOCK_LIMIT).sort((a, b) => a.soLuong - b.soLuong);
+            document.getElementById('stockCount').textContent = `${low.length} SKUs`;
+            const box = document.getElementById('stockList');
+            if (!low.length) { box.innerHTML = '<p class="text-xs text-gray-400 text-center py-8">Tồn kho ổn định, chưa có cảnh báo.</p>'; return; }
+            box.innerHTML = low.slice(0, 4).map(p => {
+                const q = p.soLuong ?? 0;
+                const [label, badge, bar, dot] = q === 0
+                    ? ['Hết hàng', 'bg-red-100 text-red-600', 'bg-red-500', 'bg-red-500']
+                    : q <= 10 ? ['Rất gấp', 'bg-red-100 text-red-600', 'bg-red-500', 'bg-red-500']
+                    : ['Sắp hết', 'bg-amber-100 text-amber-700', 'bg-amber-400', 'bg-amber-400'];
+                const pct = Math.max(4, Math.min(100, q / LOW_STOCK_LIMIT * 100));
+                return `
+                    <div>
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="flex items-start gap-2 min-w-0">
+                                <span class="w-2 h-2 rounded-full mt-1.5 shrink-0 ${dot}"></span>
+                                <div class="min-w-0">
+                                    <p class="text-xs font-semibold text-gray-800 truncate">${esc(p.tenSp)}</p>
+                                    <p class="text-[10px] text-gray-400 font-mono">Mã SP: ${esc(p.maSp)}</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 ${badge}">${label}</span>
+                        </div>
+                        <div class="mt-1.5 flex items-center justify-between text-[10px] text-gray-500">
+                            <span>Tồn: <b class="text-gray-800">${q}</b></span><span>${money(p.donGia)} đ</span>
+                        </div>
+                        <div class="h-1 bg-gray-100 rounded-full mt-1"><div class="h-1 rounded-full ${bar}" style="width:${pct}%"></div></div>
+                    </div>`;
+            }).join('');
+        }
+
+        function renderRecent(today) {
+            const list = today.slice().sort((a, b) => invDate(b) - invDate(a)).slice(0, 5);
+            const body = document.getElementById('recentBody');
+            document.getElementById('recentEmpty').classList.toggle('hidden', list.length > 0);
+            body.innerHTML = list.map(h => {
+                const name = h.khachHangTen || 'Khách vãng lai';
+                const sdt = h.khachHangSdt ? `${h.khachHangSdt.slice(0, 4)}***${h.khachHangSdt.slice(-3)}` : 'Khách lẻ';
+                const time = invDate(h).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                return `
+                    <tr class="hover:bg-gray-50 cursor-pointer" onclick="location.href='ChiTietHD.html?ma=${encodeURIComponent(h.maHd)}'">
+                        <td class="px-5 py-3 font-mono font-semibold text-emerald-700">#${esc(h.maHd)}</td>
+                        <td class="px-3 py-3 text-gray-600 whitespace-nowrap">${time}</td>
+                        <td class="px-3 py-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center text-[10px] font-bold">${esc(initials(name))}</span>
+                                <div><div class="font-medium text-gray-800">${esc(name)}</div><div class="text-[10px] text-gray-400">${esc(sdt)}</div></div>
+                            </div>
+                        </td>
+                        <td class="px-3 py-3 text-gray-600">${esc(h.tenNhanVien || '—')}</td>
+                        <td class="px-3 py-3 text-right font-bold text-gray-900 whitespace-nowrap">${money(h.tongTien)} đ</td>
+                        <td class="px-5 py-3 text-center"><span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded-md whitespace-nowrap">Đã thanh toán</span></td>
+                    </tr>`;
+            }).join('');
+        }
+
+        async function renderTop(today) {
+            const box = document.getElementById('topProducts');
+            box.innerHTML = '<p class="col-span-4 text-xs text-gray-400 text-center py-6">Đang tải...</p>';
+            const day = document.getElementById('dayPicker').value;
+            const details = await Promise.all(today.slice(0, 80).map(h =>
+                fetch(`${API_HOADON}/${encodeURIComponent(h.maHd)}`).then(r => r.ok ? r.json() : null).catch(() => null)));
+            if (day !== document.getElementById('dayPicker').value) return; // người dùng đã đổi ngày
+            const agg = {};
+            details.filter(Boolean).forEach(d => (d.items || []).forEach(it => {
+                const a = agg[it.maSp] ||= { ten: it.tenSp, sl: 0, tien: 0 };
+                a.sl += it.soLuong; a.tien += Number(it.thanhTien) || 0;
+            }));
+            const top = Object.values(agg).sort((a, b) => b.tien - a.tien).slice(0, 4);
+            const total = Object.values(agg).reduce((s, a) => s + a.tien, 0);
+            if (!top.length) { box.innerHTML = '<p class="col-span-4 text-xs text-gray-400 text-center py-6">Chưa có dữ liệu bán hàng trong ngày đã chọn</p>'; return; }
+            const tones = ['bg-emerald-50 text-emerald-700', 'bg-blue-50 text-blue-600', 'bg-amber-50 text-amber-600', 'bg-purple-50 text-purple-600'];
+            box.innerHTML = top.map((a, i) => `
+                <div class="bg-gray-50 border border-gray-100 rounded-xl p-4">
+                    <div class="flex items-center justify-between">
+                        <span class="w-8 h-8 rounded-lg flex items-center justify-center font-bold ${tones[i]}">${i + 1}</span>
+                        <span class="text-xs font-bold text-emerald-700">${(a.tien / total * 100).toFixed(1)}%</span>
+                    </div>
+                    <p class="mt-3 text-xs font-semibold text-gray-800 truncate" title="${esc(a.ten)}">${esc(a.ten)}</p>
+                    <p class="text-[11px] text-gray-400">Đã bán ${a.sl.toLocaleString('vi-VN')}</p>
+                    <p class="mt-2 text-lg font-black text-gray-900">${money(a.tien)} <span class="text-xs font-semibold">đ</span></p>
+                </div>`).join('');
+        }
+
+        function renderVip() {
+            vipCustomer = customers.slice().sort((a, b) => (b.diem || 0) - (a.diem || 0))[0] || null;
+            const box = document.getElementById('vipBox');
+            if (!vipCustomer) { box.innerHTML = '<p class="text-xs text-gray-400 text-center py-8">Chưa có khách hàng thành viên</p>'; return; }
+            const month = document.getElementById('dayPicker').value.slice(0, 7);
+            const mine = invoices.filter(h => h.khachHangSdt === vipCustomer.sdt && invDay(h).startsWith(month));
+            const spent = mine.reduce((s, h) => s + (Number(h.tongTien) || 0), 0);
+            const vouchers = (vipCustomer.voucherKhaDung || []);
+            document.getElementById('vipRank').textContent = `Hạng ${vipCustomer.hang}`;
+            box.innerHTML = `
+                <div class="flex items-center gap-3 bg-emerald-50 rounded-xl p-3">
+                    <span class="w-12 h-12 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold">${esc(initials(vipCustomer.ten))}</span>
+                    <div class="min-w-0">
+                        <p class="font-bold text-gray-900 truncate">${esc(vipCustomer.ten)}</p>
+                        <p class="text-[11px] text-gray-500 font-mono">${esc(vipCustomer.sdt)}</p>
+                        <p class="text-[11px] text-emerald-700 font-semibold"><i class="fa-solid fa-star"></i> ${money(vipCustomer.diem)} điểm tích lũy</p>
+                    </div>
+                </div>
+                <dl class="mt-4 space-y-3 text-xs">
+                    <div class="flex justify-between"><dt class="text-gray-500">Chi tiêu tháng này:</dt><dd class="font-bold text-emerald-700">${money(spent)} đ</dd></div>
+                    <div class="flex justify-between"><dt class="text-gray-500">Số hóa đơn tháng này:</dt><dd class="font-semibold text-gray-800">${mine.length}</dd></div>
+                    <div class="flex justify-between"><dt class="text-gray-500">Voucher khả dụng:</dt><dd class="font-semibold text-gray-800">${vouchers.length ? vouchers.map(v => v + '%').join(', ') : 'Chưa có'}</dd></div>
+                </dl>`;
+        }
+
+        function exportCsv() {
+            const day = document.getElementById('dayPicker').value;
+            const rows = invoices.filter(h => invDay(h) === day);
+            const lines = [['Mã HD', 'Thời gian', 'Khách hàng', 'SĐT', 'Nhân viên', 'Tổng tiền']].concat(rows.map(h =>
+                [h.maHd, invDate(h).toLocaleString('vi-VN'), h.khachHangTen || 'Khách lẻ', h.khachHangSdt || '', h.tenNhanVien || '', h.tongTien]));
+            const csv = '﻿' + lines.map(r => r.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\r\n');
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+            a.download = `bao-cao-${day}.csv`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('dayPicker').value = dayStr(new Date());
+            document.getElementById('dayPicker').addEventListener('change', render);
+            document.getElementById('btnSync').addEventListener('click', loadAll);
+            document.getElementById('btnExport').addEventListener('click', exportCsv);
+            document.getElementById('btnVipCrm').addEventListener('click', () => {
+                location.href = vipCustomer ? 'ChiTietKH.html?sdt=' + encodeURIComponent(vipCustomer.sdt) : 'DanhSachKH.html';
+            });
+            document.getElementById('btnVipVoucher').addEventListener('click', () => {
+                location.href = vipCustomer ? 'ChiTietKH.html?sdt=' + encodeURIComponent(vipCustomer.sdt) : 'DanhSachKH.html';
+            });
+            loadAll();
+        });
+    </script>
+</body>
+</html>
