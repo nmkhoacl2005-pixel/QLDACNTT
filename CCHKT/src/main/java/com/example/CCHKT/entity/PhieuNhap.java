@@ -1,5 +1,6 @@
 package com.example.CCHKT.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -26,6 +27,12 @@ public class PhieuNhap {
 
     @Column(name = "ten_nhan_vien", length = 100)
     private String tenNhanVien;
+
+    // FK phieu_nhap.cccd_nhan_vien -> nhansu.cccd (nullable)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cccd_nhan_vien", nullable = true, foreignKey = @ForeignKey(name = "FK_pn_nhansu"))
+    private NhanSu nhanSu;
 
     @OneToMany(mappedBy = "phieuNhap", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ChiTietPhieuNhap> chiTietPhieuNhaps = new ArrayList<>();

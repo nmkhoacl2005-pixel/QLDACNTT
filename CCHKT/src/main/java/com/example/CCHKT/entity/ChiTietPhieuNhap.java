@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ChiTietPhieuNhap {
 
     @EmbeddedId
@@ -16,12 +15,12 @@ public class ChiTietPhieuNhap {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("maPn")
-    @JoinColumn(name = "ma_pn")
+    @JoinColumn(name = "ma_pn", foreignKey = @ForeignKey(name = "FK_ctpn_pn"))
     private PhieuNhap phieuNhap;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("maSp")
-    @JoinColumn(name = "ma_sp")
+    @JoinColumn(name = "ma_sp", foreignKey = @ForeignKey(name = "FK_ctpn_sp"))
     private SanPham sanPham;
 
     @Column(name = "so_luong", nullable = false)

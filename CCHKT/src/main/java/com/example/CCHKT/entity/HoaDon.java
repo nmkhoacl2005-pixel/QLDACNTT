@@ -1,5 +1,6 @@
 package com.example.CCHKT.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -30,6 +31,18 @@ public class HoaDon {
 
     @Column(name = "ma_voucher", length = 30)
     private String maVoucher;
+
+    // Quan hệ chỉ đọc để tạo FK hoa_don.ma_voucher -> voucher.ma_voucher
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ma_voucher", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "FK_hd_voucher"))
+    private Voucher voucher;
+
+    // FK hoa_don.cccd_nhan_vien -> nhansu.cccd (nullable)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cccd_nhan_vien", nullable = true, foreignKey = @ForeignKey(name = "FK_hd_nhansu"))
+    private NhanSu nhanSu;
 
     @Column(name = "ten_nhan_vien", length = 100)
     private String tenNhanVien;

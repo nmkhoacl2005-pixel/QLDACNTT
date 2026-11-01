@@ -11,7 +11,7 @@ public class NhanSu {
     @Column(name = "cccd", length = 20, nullable = false)
     private String cccd;
 
-    @Column(name = "hoten", nullable = false)
+    @Column(name = "hoten", nullable = false, columnDefinition = "NVARCHAR(255)")
     private String hoTen;
 
     @Column(name = "sdt", unique = true, length = 15, nullable = false)
